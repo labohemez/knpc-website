@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
+import MobileNav from "@/components/MobileNav";
 import "./globals.css";
 
 const notoSansKR = Noto_Sans_KR({
@@ -8,6 +9,14 @@ const notoSansKR = Noto_Sans_KR({
   variable: "--font-noto-sans-kr",
   display: "swap",
 });
+
+import type { Viewport } from "next";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +34,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`h-full ${notoSansKR.variable}`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col pb-16 lg:pb-0">
+        {children}
+        <MobileNav />
+      </body>
     </html>
   );
 }
