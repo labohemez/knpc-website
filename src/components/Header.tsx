@@ -27,11 +27,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-[#ddd]"
-          : "bg-transparent border-b border-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#ddd]"
     >
       <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
         <div className="flex h-[70px] lg:h-[90px] items-center justify-between">
@@ -42,9 +38,7 @@ export default function Header() {
               alt="강남교회"
               width={400}
               height={49}
-              className={`h-[24px] lg:h-[28px] w-auto object-contain transition-all duration-500 ${
-                scrolled ? "brightness-100" : "brightness-0 invert"
-              }`}
+              className="h-[30px] lg:h-[36px] w-auto object-contain"
               priority
               unoptimized
             />
@@ -56,11 +50,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`px-5 py-2 text-[0.88rem] lg:text-[clamp(0.88rem,1vw,1.1rem)] font-semibold tracking-tight transition-colors duration-300 ${
-                  scrolled
-                    ? "text-[#222] hover:text-primary"
-                    : "text-white/80 hover:text-white"
-                }`}
+                className="px-5 py-2 text-[0.88rem] lg:text-[clamp(0.88rem,1vw,1.1rem)] font-semibold tracking-tight text-[#222] hover:text-primary transition-colors duration-300"
               >
                 {item.name}
               </Link>
@@ -70,9 +60,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className={`lg:hidden p-2 -mr-2 transition-colors duration-300 ${
-              scrolled ? "text-[#222]" : "text-white"
-            }`}
+            className="lg:hidden p-2 -mr-2 text-[#222]"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
             aria-expanded={mobileMenuOpen}
