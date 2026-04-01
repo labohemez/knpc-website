@@ -4,29 +4,19 @@ import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import HeroSlider from "@/components/HeroSlider";
 import NewsSection from "@/components/NewsSection";
+import SermonSlider from "@/components/SermonSlider";
+import GallerySection from "@/components/GallerySection";
 
 export default function Home() {
   return (
     <>
       <Header />
 
-      <main className="flex-1">
+      <main className="flex-1 bg-white flex flex-col gap-3">
         {/* ── 히어로 ── */}
         <HeroSlider />
 
-        {/* ── 예배 안내 바 ── */}
-        <section className="bg-primary">
-          <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
-            <a href="/worship" className="flex items-center justify-center gap-6 py-5 text-white group">
-              <span className="text-[0.85rem] font-medium tracking-[-0.02em]">
-                주일예배 1부 8:00 / 2부 10:00 / 3부 12:00
-              </span>
-              <svg className="w-4 h-4 text-white/50 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
-            </a>
-          </div>
-        </section>
+
 
         {/* ── 2026 표어 + 예배시간 ── */}
         <section className="relative py-[5rem] lg:py-[6rem] overflow-hidden">
@@ -83,10 +73,10 @@ export default function Home() {
         </section>
 
         {/* ── 바로가기 ── */}
-        <section className="py-[4rem] lg:py-[5rem] bg-white">
+        <section className="py-[4rem] lg:py-[5rem] bg-[#f5f5f7]">
           <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
             <ScrollReveal>
-              <div className="grid grid-cols-4 lg:grid-cols-7 gap-6 lg:gap-8">
+              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4 lg:gap-8">
                 {[
                   { name: "유튜브 채널", icon: (
                     <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
@@ -190,154 +180,13 @@ export default function Home() {
         </section>
 
         {/* ── 최근 설교 ── */}
-        <section className="py-[5rem] lg:py-[6rem] bg-[#f8f8f8]">
-          <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
-            <ScrollReveal>
-              <div className="flex items-end justify-between mb-10">
-                <div>
-                  <p className="text-accent text-[0.75rem] font-semibold tracking-[0.2em] uppercase mb-3">
-                    Sermons
-                  </p>
-                  <h2 className="text-[1.8rem] lg:text-[2.2rem] font-bold text-[#222] tracking-[-0.04em]">
-                    말씀과 찬양
-                  </h2>
-                </div>
-                <a
-                  href="/sermons"
-                  className="hidden sm:inline-flex items-center gap-2 text-[0.82rem] font-medium text-[#222] border border-[#222] px-5 py-2 hover:bg-[#222] hover:text-white transition-all duration-300 tracking-[-0.02em]"
-                >
-                  전체보기
-                </a>
-              </div>
-            </ScrollReveal>
-
-            {/* 메인 설교 — 풀와이드 대형 */}
-            <ScrollReveal>
-              <a href="/sermons" className="block group">
-                <div className="relative aspect-video overflow-hidden">
-                  <Image
-                    src="/images/hero-2.jpg"
-                    alt="설교 영상"
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-
-                  {/* 재생 버튼 */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center group-hover:bg-white/25 group-hover:scale-110 transition-all duration-500">
-                      <svg className="w-8 h-8 lg:w-10 lg:h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* 하단 정보 */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-10">
-                    <span className="inline-block px-3 py-1 bg-accent text-white text-[0.72rem] font-semibold tracking-[-0.02em] mb-3">
-                      주일설교
-                    </span>
-                    <h3 className="text-[1.4rem] lg:text-[1.8rem] font-bold text-white tracking-[-0.04em] leading-snug">
-                      소유할 것인가? 소유될 것인가?
-                    </h3>
-                    <p className="mt-2 text-[0.85rem] lg:text-[0.95rem] text-white/60 tracking-[-0.02em]">
-                      베드로전서 2:9~10 · 서강일 목사
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </ScrollReveal>
-
-            {/* 하단 설교 카드 3개 */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-[1px] bg-[#ddd] mt-[1px]">
-              {[
-                { category: "주일예배", title: "너희는 나를 누구라 하느냐", scripture: "마태복음 16:13-20", pastor: "김해광 목사" },
-                { category: "수요예배", title: "내가 만든 하나님", scripture: "사사기 17:1-13", pastor: "황봉규 목사" },
-                { category: "금요기도회", title: "안식에 들어가기를 힘쓸지니", scripture: "히브리서 4:1-11", pastor: "김광열 목사" },
-              ].map((sermon) => (
-                <ScrollReveal key={sermon.title}>
-                  <a
-                    href="/sermons"
-                    className="block bg-white p-6 lg:p-7 group hover:bg-[#fafafa] transition-colors duration-200"
-                  >
-                    <span className="text-[0.7rem] font-semibold text-accent tracking-[-0.02em]">
-                      {sermon.category}
-                    </span>
-                    <h4 className="mt-2 text-[1rem] lg:text-[1.1rem] font-bold text-[#222] tracking-[-0.04em] group-hover:text-primary transition-colors duration-200 leading-snug">
-                      {sermon.title}
-                    </h4>
-                    <p className="mt-2 text-[0.78rem] text-[#999] tracking-[-0.02em]">
-                      {sermon.scripture} · {sermon.pastor}
-                    </p>
-                  </a>
-                </ScrollReveal>
-              ))}
-            </div>
-
-            <div className="mt-8 text-center sm:hidden">
-              <a href="/sermons" className="text-[0.82rem] font-medium text-[#222] border border-[#222] px-5 py-2 hover:bg-[#222] hover:text-white transition-all duration-300">
-                전체보기
-              </a>
-            </div>
-          </div>
-        </section>
+        <SermonSlider />
 
         {/* ── 교회 소식 ── */}
         <NewsSection />
 
         {/* ── 갤러리 ── */}
-        <section className="py-[5rem] lg:py-[6rem] bg-[#f8f8f8]">
-          <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
-            <ScrollReveal>
-              <div className="flex items-end justify-between mb-10">
-                <div>
-                  <p className="text-accent text-[0.75rem] font-semibold tracking-[0.2em] uppercase mb-3">
-                    Gallery
-                  </p>
-                  <h2 className="text-[1.8rem] lg:text-[2.2rem] font-bold text-[#222] tracking-[-0.04em]">
-                    강남교회 앨범
-                  </h2>
-                </div>
-                <a
-                  href="/gallery"
-                  className="hidden sm:inline-flex items-center gap-2 text-[0.82rem] font-medium text-[#222] border border-[#222] px-5 py-2 hover:bg-[#222] hover:text-white transition-all duration-300 tracking-[-0.02em]"
-                >
-                  전체보기
-                </a>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal>
-              <div className="grid grid-cols-3 grid-rows-2 gap-[3px] h-[50vw] max-h-[600px]">
-                {/* 큰 이미지 좌측 */}
-                <a href="/gallery" className="row-span-2 relative overflow-hidden group bg-[#e8e8e8]">
-                  <Image src="/images/hero-1.jpg" alt="교인들" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
-                </a>
-                {/* 우측 상단 2개 */}
-                <a href="/gallery" className="relative overflow-hidden group bg-[#e8e8e8]">
-                  <Image src="/images/gallery-1.jpg" alt="교회 행사" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
-                </a>
-                <a href="/gallery" className="relative overflow-hidden group bg-[#e8e8e8]">
-                  <Image src="/images/gallery-2.jpg" alt="어린이부" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
-                </a>
-                {/* 우측 하단 큰 이미지 */}
-                <a href="/gallery" className="col-span-2 relative overflow-hidden group bg-[#e8e8e8]">
-                  <Image src="/images/gallery-6.jpg" alt="청년부 수련회" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
-                </a>
-              </div>
-            </ScrollReveal>
-
-            <div className="mt-8 text-center sm:hidden">
-              <a href="/gallery" className="text-[0.82rem] font-medium text-[#222] border border-[#222] px-5 py-2 hover:bg-[#222] hover:text-white transition-all duration-300">
-                전체보기
-              </a>
-            </div>
-          </div>
-        </section>
+        <GallerySection />
 
         {/* ── 환영 + 비전 ── */}
         <section className="relative overflow-hidden">
@@ -422,10 +271,10 @@ export default function Home() {
         </section>
 
         {/* ── 헌금 · 연락처 ── */}
-        <section className="py-[4rem] lg:py-[5rem] bg-white border-t border-[#eee]">
+        <section className="py-[4rem] lg:py-[5rem] bg-[#f5f5f7]">
           <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
             <ScrollReveal>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12">
                 <div className="flex items-start gap-4">
                   <div className="shrink-0 w-11 h-11 rounded-full bg-[#f8f8f8] flex items-center justify-center">
                     <svg className="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">

@@ -23,6 +23,7 @@
 body {
   background: #ffffff;
   color: #222;
+  overflow-x: hidden;
   font-family: var(--font-sans);
   letter-spacing: -0.03em;
   -webkit-font-smoothing: auto;

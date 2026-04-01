@@ -12,7 +12,7 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1a2820] text-[#727a81]">
+    <footer className="bg-[#1a2820] text-[#727a81] pb-20 lg:pb-0">
       <div className="border-b border-white/10">
         <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
           <nav className="flex flex-wrap items-center gap-x-6 gap-y-2 py-5">
