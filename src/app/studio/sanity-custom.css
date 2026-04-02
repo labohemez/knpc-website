@@ -1,0 +1,88 @@
+/* =============================================
+   강남교회 CMS — Studio 커스텀 테마
+   ============================================= */
+
+:root { --font-family-sans: 'Pretendard Variable', Pretendard, -apple-system, sans-serif; }
+
+/* ══════════════════════════════
+   글로벌
+   ══════════════════════════════ */
+[data-ui="Pane"] { border-right: 1px solid #f0f0f0; }
+*:focus-visible { outline: 2px solid rgba(37,99,235,0.25) !important; outline-offset: 1px; }
+
+/* ══════════════════════════════
+   사이드바 리스트
+   ══════════════════════════════ */
+[data-ui="PaneItem"] { border-radius: 5px; margin: 1px 4px; transition: all 0.1s; }
+[data-ui="PaneItem"]:hover { background: #f5f5f5 !important; }
+[data-ui="PaneItem"][data-selected="true"],
+[data-ui="PaneItem"][aria-selected="true"] { background: #f0f4ff !important; }
+[data-ui="PaneItem"][data-selected="true"] [data-ui="Text"],
+[data-ui="PaneItem"][aria-selected="true"] [data-ui="Text"] { color: #2563eb !important; font-weight: 500 !important; }
+
+/* 뱃지 */
+[data-ui="Badge"][data-tone="positive"],
+[data-ui="StatusBadge"][data-tone="positive"] { background: #ecfdf5 !important; color: #059669 !important; border-radius: 3px; font-size: 10px; padding: 1px 5px; font-weight: 500; }
+[data-ui="Badge"][data-tone="caution"],
+[data-ui="StatusBadge"][data-tone="caution"] { background: #fffbeb !important; color: #d97706 !important; border-radius: 3px; font-size: 10px; padding: 1px 5px; font-weight: 500; }
+
+/* ══════════════════════════════
+   문서 폼 레이아웃
+   ══════════════════════════════ */
+[data-testid="document-panel-scroller"] [class*="FormContainer"] {
+  max-width: 100% !important;
+  padding: 20px 28px 40px !important;
+}
+[data-testid="document-panel-scroller"] [class*="TopRegionWrapper"] {
+  padding: 4px 0 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* 필드 간격 */
+[data-testid="form-view"] [data-ui="Stack"] { gap: 18px !important; }
+[data-testid="form-view"] fieldset { margin: 0 !important; padding: 0 !important; }
+[data-testid="form-view"] fieldset legend {
+  font-size: 10px !important; font-weight: 600 !important; color: #999 !important;
+  text-transform: uppercase !important; letter-spacing: 0.08em !important; margin-bottom: 8px !important;
+}
+
+/* ══════════════════════════════
+   필드 라벨
+   ══════════════════════════════ */
+[data-testid="form-view"] [class*="FormFieldHeader"] label,
+[data-testid="form-view"] [data-ui="FormFieldLabel"] {
+  font-size: 11.5px !important; font-weight: 500 !important; color: #888 !important; margin-bottom: 3px !important;
+}
+
+/* ══════════════════════════════
+   인풋 / 셀렉트
+   ══════════════════════════════ */
+[data-testid="form-view"] [class*="InputRoot"],
+[data-testid="form-view"] [class*="SelectRoot"],
+[data-testid="form-view"] [class*="StyledCard-sc"][data-as="label"] {
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 5px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  transition: border-color 0.12s, box-shadow 0.12s !important;
+}
+[data-testid="form-view"] [class*="InputRoot"]:focus-within,
+[data-testid="form-view"] [class*="SelectRoot"]:focus-within,
+[data-testid="form-view"] [class*="StyledCard-sc"][data-as="label"]:focus-within {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.06) !important;
+}
+[data-testid="form-view"] input,
+[data-testid="form-view"] select {
+  font-size: 13px !important; color: #1a1a1a !important; padding: 7px 10px !important;
+}
+[data-testid="form-view"] input::placeholder { color: #ccc !important; }
+
+/* ══════════════════════════════
+   Publish 버튼
+   ══════════════════════════════ */
+button[data-tone="primary"] {
+  border-radius: 5px !important; font-weight: 500 !important; font-size: 12px !important;
+  background: #2563eb !important; padding: 6px 14px !important;
+}
+button[data-tone="primary"]:hover { background: #1d4ed8 !important; }

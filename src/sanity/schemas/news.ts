@@ -1,9 +1,17 @@
 import { defineField, defineType } from "sanity";
+import RichTextEditor from "../components/RichTextEditor";
 
 export default defineType({
   name: "news",
   title: "교회 소식",
   type: "document",
+  fieldsets: [
+    {
+      name: "meta",
+      title: "기본 정보",
+      options: { columns: 3 },
+    },
+  ],
   fields: [
     defineField({
       name: "title",
@@ -15,6 +23,7 @@ export default defineType({
       name: "category",
       title: "분류",
       type: "string",
+      fieldset: "meta",
       options: {
         list: [
           { title: "공지사항", value: "공지사항" },
@@ -30,31 +39,29 @@ export default defineType({
       name: "date",
       title: "날짜",
       type: "date",
+      fieldset: "meta",
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "isNew",
+      title: "새 글",
+      type: "boolean",
+      fieldset: "meta",
+      initialValue: true,
     }),
     defineField({
       name: "body",
       title: "본문",
-      type: "array",
-      of: [
-        { type: "block" },
-        {
-          type: "image",
-          options: { hotspot: true },
-        },
-      ],
+      type: "text",
+      components: {
+        input: RichTextEditor,
+      },
     }),
     defineField({
       name: "attachments",
       title: "첨부파일",
       type: "array",
       of: [{ type: "file" }],
-    }),
-    defineField({
-      name: "isNew",
-      title: "새 글 표시",
-      type: "boolean",
-      initialValue: true,
     }),
   ],
   orderings: [
