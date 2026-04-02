@@ -7,7 +7,7 @@ const footerLinks = [
   { name: "공동체", href: "/community" },
   { name: "양육", href: "/nurture" },
   { name: "훈련", href: "/training" },
-  { name: "커뮤니티", href: "/board" },
+  { name: "갤러리", href: "/gallery" },
 ];
 
 export default function Footer() {
@@ -44,13 +44,9 @@ export default function Footer() {
             </p>
           </div>
           <div className="flex items-center gap-4 text-[0.72rem]">
-            <a href="#" className="text-[#727a81] hover:text-white transition-colors">
-              이용약관
-            </a>
+            <span className="text-[#727a81]">이용약관</span>
             <span className="text-[#475460]">|</span>
-            <a href="#" className="text-white hover:text-white/80 transition-colors font-medium">
-              개인정보처리방침
-            </a>
+            <span className="text-white font-medium">개인정보처리방침</span>
           </div>
         </div>
         <p className="mt-8 text-[0.72rem] text-[#475460] tracking-[-0.02em]">

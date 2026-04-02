@@ -98,7 +98,7 @@ export default function Home() {
                       <circle cx="52" cy="12" r="4" fill="#D32F2F"/>
                       <circle cx="52" cy="12" r="1.5" fill="white"/>
                     </svg>
-                  ), href: "/worship" },
+                  ), href: "/about#worship" },
                   { name: "기도요청", icon: (
                     <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
                       <path d="M32 10L34 4" stroke="#C69D6C" strokeWidth="2.5" strokeLinecap="round"/>
@@ -159,7 +159,7 @@ export default function Home() {
                       <path d="M32 22V30" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
                       <path d="M28 26H36" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
                     </svg>
-                  ), href: "/contact" },
+                  ), href: "/about#location" },
                 ].map((item) => (
                   <a
                     key={item.name}

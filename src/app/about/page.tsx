@@ -139,7 +139,7 @@ export default function AboutPage() {
                   </div>
                   <div className="mt-4 border-l-2 border-accent pl-4">
                     <p className="text-[0.78rem] text-[#999] tracking-[-0.02em]">담임목사</p>
-                    <p className="text-[1.1rem] font-bold text-[#222] tracking-[-0.03em]">홍길동 목사</p>
+                    <p className="text-[1.1rem] font-bold text-[#222] tracking-[-0.03em]">담임목사</p>
                   </div>
                 </div>
                 <div className="flex-1">
@@ -167,7 +167,7 @@ export default function AboutPage() {
                       강남교회의 문은 언제나 열려 있습니다. 오십시오, 함께 예배합시다.
                     </p>
                     <p className="text-[#888] text-[0.85rem]">
-                      강남교회 담임목사 홍길동
+                      강남교회 담임목사
                     </p>
                   </div>
                 </div>
