@@ -302,7 +302,8 @@ export default function HeroSlider() {
             if (segmentStart === "half") {
               resolvedStart.current = Math.floor(duration / 2);
             } else {
-              resolvedStart.current = segmentStart < 0 ? Math.max(0, duration + segmentStart) : segmentStart;
+              const ss = segmentStart as unknown as number;
+              resolvedStart.current = ss < 0 ? Math.max(0, duration + ss) : ss;
             }
             resolvedEnd.current = resolvedStart.current + segmentDuration;
 
