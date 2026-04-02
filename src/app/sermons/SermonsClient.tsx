@@ -5,7 +5,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
-import { urlFor, type Sermon } from "@/lib/queries";
+import { type Sermon } from "@/lib/queries";
 
 const categories = ["전체", "주일예배", "수요예배", "새벽기도회", "금요기도회", "특별예배", "청년예배"];
 
@@ -17,11 +17,20 @@ function PlayIcon() {
   );
 }
 
+function extractYoutubeId(url: string): string | null {
+  const match = url.match(/(?:v=|youtu\.be\/|embed\/)([^&?/]+)/);
+  return match ? match[1] : null;
+}
+
+function toWatchUrl(url: string): string {
+  const id = extractYoutubeId(url);
+  return id ? `https://www.youtube.com/watch?v=${id}` : url;
+}
+
 function thumbnailUrl(sermon: Sermon): string {
-  if (sermon.thumbnail) return urlFor(sermon.thumbnail).width(640).height(360).url();
   if (sermon.videoUrl) {
-    const match = sermon.videoUrl.match(/(?:v=|youtu\.be\/)([^&]+)/);
-    if (match) return `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg`;
+    const id = extractYoutubeId(sermon.videoUrl);
+    if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   }
   return "/images/gallery-1.jpg";
 }
@@ -66,7 +75,7 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
                     <Image src={thumbnailUrl(featured)} alt={featured.title} fill className="object-cover opacity-80" />
                     <div className="absolute inset-0 flex items-center justify-center">
                       {featured.videoUrl && (
-                        <a href={featured.videoUrl} target="_blank" rel="noopener noreferrer"
+                        <a href={toWatchUrl(featured.videoUrl)} target="_blank" rel="noopener noreferrer"
                           className="w-16 h-16 bg-white/20 hover:bg-accent transition-colors duration-300 flex items-center justify-center backdrop-blur-sm text-white"
                           aria-label="유튜브에서 보기">
                           <PlayIcon />
@@ -84,7 +93,7 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
                     <p className="text-[0.82rem] text-[#999] tracking-[-0.02em]">{featured.pastor} · {formatDate(featured.date)}</p>
                     {featured.videoUrl && (
                       <div className="mt-6">
-                        <a href={featured.videoUrl} target="_blank" rel="noopener noreferrer"
+                        <a href={toWatchUrl(featured.videoUrl)} target="_blank" rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 text-[0.82rem] font-semibold tracking-[-0.02em] hover:bg-primary-dark transition-colors duration-300">
                           <PlayIcon /> 영상 보기
                         </a>

@@ -7,6 +7,7 @@ import { logoutAction } from "../login/actions";
 const NAV = [
   { href: "/admin/news", label: "소식" },
   { href: "/admin/sermons", label: "설교" },
+  { href: "/admin/gallery", label: "갤러리" },
 ];
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
