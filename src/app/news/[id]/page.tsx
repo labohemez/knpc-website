@@ -21,7 +21,7 @@ export default async function NewsDetailPage({ params }: Props) {
     return (
       <>
         <Header />
-        <main className="flex-1 bg-white pt-[70px] lg:pt-[90px]">
+        <main className="flex-1 bg-white pt-[100px] lg:pt-[120px]">
           <div className="mx-auto max-w-[900px] px-5 lg:px-8 py-20 text-center">
             <p className="text-[#999] text-[1rem]">게시글을 찾을 수 없습니다</p>
             <Link href="/news" className="inline-block mt-4 text-primary text-[0.85rem] hover:underline">목록으로 돌아가기</Link>
@@ -37,8 +37,8 @@ export default async function NewsDetailPage({ params }: Props) {
   return (
     <>
       <Header />
-      <main className="flex-1 bg-white pt-[70px] lg:pt-[90px]">
-        <section className="relative h-[200px] lg:h-[280px] flex items-end pb-8 lg:pb-12">
+      <main className="flex-1 bg-white">
+        <section className="relative h-[280px] lg:h-[370px] flex items-end pb-8 lg:pb-12">
           <Image src="/images/gallery-4.jpg" alt="소식" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-primary-dark/80" />
           <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full">

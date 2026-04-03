@@ -56,9 +56,9 @@ export default function TrainingPage() {
     <>
       <Header />
 
-      <main className="flex-1 bg-white flex flex-col gap-3 pt-[70px] lg:pt-[90px]">
+      <main className="flex-1 bg-white flex flex-col gap-3">
         {/* ── 히어로 ── */}
-        <section className="relative h-[280px] lg:h-[380px] flex items-end pb-10 lg:pb-14">
+        <section className="relative h-[350px] lg:h-[470px] flex items-end pb-10 lg:pb-14">
           <Image
             src="/images/gallery-4.jpg"
             alt="강남교회 훈련"

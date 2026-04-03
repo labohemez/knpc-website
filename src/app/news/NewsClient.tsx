@@ -38,9 +38,9 @@ export default function NewsClient({
     <>
       <Header />
 
-      <main className="flex-1 bg-white flex flex-col gap-3 pt-[70px] lg:pt-[90px]">
+      <main className="flex-1 bg-white flex flex-col gap-3">
         {/* ── 히어로 ── */}
-        <section className="relative h-[280px] lg:h-[380px] flex items-end pb-10 lg:pb-14">
+        <section className="relative h-[350px] lg:h-[470px] flex items-end pb-10 lg:pb-14">
           <Image src="/images/gallery-4.jpg" alt="교회 소식" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-primary-dark/80" />
           <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full">

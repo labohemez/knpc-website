@@ -9,14 +9,6 @@ import { type Sermon } from "@/lib/queries";
 
 const categories = ["전체", "주일예배", "수요예배", "새벽기도회", "금요기도회", "특별예배", "청년예배"];
 
-function PlayIcon() {
-  return (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M8 5v14l11-7z" />
-    </svg>
-  );
-}
-
 function extractYoutubeId(url: string): string | null {
   const match = url.match(/(?:v=|youtu\.be\/|embed\/)([^&?/]+)/);
   return match ? match[1] : null;
@@ -45,9 +37,10 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
   const [activeCategory, setActiveCategory] = useState("전체");
   const [page, setPage] = useState(1);
 
-  const filtered = activeCategory === "전체"
-    ? sermons
-    : sermons.filter((s) => s.category === activeCategory);
+  const filtered =
+    activeCategory === "전체"
+      ? sermons
+      : sermons.filter((s) => s.category === activeCategory);
 
   const featured = sermons[0];
   const allList = activeCategory === "전체" ? filtered.slice(1) : filtered;
@@ -58,52 +51,110 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
     <>
       <Header />
 
-      <main className="flex-1 bg-white flex flex-col gap-3 pt-[70px] lg:pt-[90px]">
-        {/* ── 히어로 ── */}
-        <section className="relative h-[280px] lg:h-[380px] flex items-end pb-10 lg:pb-14">
-          <Image src="/images/hero-1.jpg" alt="말씀과 찬양" fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-primary-dark/80" />
+      <main className="flex-1 flex flex-col">
+
+        {/* ── 히어로 배너 ── */}
+        <section className="relative h-[310px] lg:h-[410px] flex items-end pb-8 lg:pb-12 overflow-hidden bg-[#0d0d0d]">
+          <div
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,0.04) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,0.04) 40px)",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-[#0d0d0d]/60 to-transparent" />
           <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full">
-            <p className="text-accent text-[0.72rem] font-semibold tracking-[0.2em] uppercase mb-2">Sermons</p>
-            <h1 className="text-[2.2rem] lg:text-[3rem] font-bold text-white tracking-[-0.04em] leading-[1.15]">말씀과 찬양</h1>
+            <p className="text-[0.68rem] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">
+              Sermons
+            </p>
+            <h1 className="text-[2rem] lg:text-[2.8rem] font-bold text-white tracking-[-0.04em] leading-[1.15]">
+              말씀과 찬양
+            </h1>
           </div>
         </section>
 
-        {/* ── 최신 설교 ── */}
+        {/* ── 최신 설교 히어로 카드 ── */}
         {featured && activeCategory === "전체" && (
-          <section className="bg-white py-[4rem] lg:py-[5rem]">
+          <section className="bg-[#0d0d0d] pb-10 lg:pb-14">
             <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
               <ScrollReveal>
-                <p className="text-accent text-[0.72rem] font-semibold tracking-[0.2em] uppercase mb-6">Latest Sermon</p>
-                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-                  <div className="relative w-full lg:w-[560px] aspect-video bg-[#111] overflow-hidden shrink-0">
-                    <Image src={thumbnailUrl(featured)} alt={featured.title} fill className="object-cover opacity-80" />
-                    <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative rounded-xl overflow-hidden border border-white/8">
+                  <div className="absolute inset-0">
+                    <Image
+                      src={thumbnailUrl(featured)}
+                      alt={featured.title}
+                      fill
+                      className="object-cover opacity-20 blur-sm scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0d0d0d] via-[#0d0d0d]/90 to-[#0d0d0d]/50" />
+                  </div>
+
+                  <div className="relative flex flex-col lg:flex-row gap-8 p-6 lg:p-10 items-start">
+                    <div className="relative w-full lg:w-[420px] aspect-video rounded-lg overflow-hidden shrink-0 bg-white/5 border border-white/10">
+                      <Image
+                        src={thumbnailUrl(featured)}
+                        alt={featured.title}
+                        fill
+                        className="object-cover opacity-85"
+                      />
                       {featured.videoUrl && (
-                        <a href={toWatchUrl(featured.videoUrl)} target="_blank" rel="noopener noreferrer"
-                          className="w-16 h-16 bg-white/20 hover:bg-accent transition-colors duration-300 flex items-center justify-center backdrop-blur-sm text-white"
-                          aria-label="유튜브에서 보기">
-                          <PlayIcon />
+                        <a
+                          href={toWatchUrl(featured.videoUrl)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute inset-0 flex items-center justify-center group"
+                          aria-label="유튜브에서 보기"
+                        >
+                          <div className="w-14 h-14 rounded-full bg-white/15 border border-white/30 flex items-center justify-center group-hover:bg-white/25 group-hover:scale-110 transition-all duration-300">
+                            <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </div>
                         </a>
                       )}
                     </div>
-                    <div className="absolute top-3 left-3 bg-accent px-2.5 py-1 text-[0.7rem] font-bold text-white tracking-[-0.01em]">최신</div>
-                  </div>
-                  <div className="flex-1 py-2">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-[0.72rem] font-semibold text-primary bg-primary/10 px-2.5 py-1 tracking-[-0.01em]">{featured.category}</span>
-                    </div>
-                    <h2 className="text-[1.5rem] lg:text-[1.9rem] font-bold text-[#222] tracking-[-0.04em] leading-[1.3] mb-3">{featured.title}</h2>
-                    {featured.scripture && <p className="text-[0.85rem] text-[#777] tracking-[-0.02em] mb-1">{featured.scripture}</p>}
-                    <p className="text-[0.82rem] text-[#999] tracking-[-0.02em]">{featured.pastor} · {formatDate(featured.date)}</p>
-                    {featured.videoUrl && (
-                      <div className="mt-6">
-                        <a href={toWatchUrl(featured.videoUrl)} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 text-[0.82rem] font-semibold tracking-[-0.02em] hover:bg-primary-dark transition-colors duration-300">
-                          <PlayIcon /> 영상 보기
-                        </a>
+
+                    <div className="flex-1 flex flex-col justify-center py-2">
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="flex items-center gap-1.5 text-[0.68rem] font-semibold tracking-[0.12em] uppercase text-white/50">
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                          최신 설교
+                        </span>
+                        <span className="text-[0.72rem] font-medium text-white/30 bg-white/8 px-2.5 py-0.5 rounded-full">
+                          {featured.category}
+                        </span>
                       </div>
-                    )}
+
+                      <h2 className="text-[1.6rem] lg:text-[2rem] font-bold text-white tracking-[-0.04em] leading-[1.3] mb-3">
+                        {featured.title}
+                      </h2>
+
+                      {featured.scripture && (
+                        <p className="text-[0.85rem] text-white/50 tracking-[-0.01em] mb-1.5">
+                          {featured.scripture}
+                        </p>
+                      )}
+
+                      <p className="text-[0.82rem] text-white/35 tracking-[-0.01em] mb-8">
+                        {featured.pastor} · {formatDate(featured.date)}
+                      </p>
+
+                      {featured.videoUrl && (
+                        <div className="flex items-center gap-3">
+                          <a
+                            href={toWatchUrl(featured.videoUrl)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 bg-white text-[#0d0d0d] px-6 py-2.5 text-[0.82rem] font-semibold tracking-[-0.02em] rounded-lg hover:bg-white/90 transition-colors duration-200"
+                          >
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                            영상 보기
+                          </a>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
@@ -112,42 +163,66 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
         )}
 
         {/* ── 설교 목록 ── */}
-        <section className="py-[4rem] lg:py-[5rem] bg-[#f5f5f7]">
+        <section className="flex-1 bg-[#0f0f0f] py-10 lg:py-14">
           <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
+
             <ScrollReveal>
               <div className="flex items-center gap-2 flex-wrap mb-8 lg:mb-10">
                 {categories.map((cat) => (
-                  <button key={cat} onClick={() => { setActiveCategory(cat); setPage(1); }}
-                    className={`px-5 py-2 text-[0.82rem] font-medium tracking-[-0.02em] transition-colors duration-200 ${
+                  <button
+                    key={cat}
+                    onClick={() => { setActiveCategory(cat); setPage(1); }}
+                    className={`px-4 py-1.5 text-[0.8rem] font-medium tracking-[-0.01em] rounded-full transition-all duration-200 ${
                       activeCategory === cat
-                        ? "bg-primary text-white"
-                        : "bg-white border border-[#ddd] text-[#555] hover:border-primary hover:text-primary"
-                    }`}>
+                        ? "bg-white text-[#0d0d0d]"
+                        : "bg-white/8 border border-white/12 text-white/50 hover:bg-white/12 hover:text-white/70"
+                    }`}
+                  >
                     {cat}
                   </button>
                 ))}
               </div>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
               {list.map((sermon) => (
                 <ScrollReveal key={sermon._id}>
-                  <article className="bg-white group cursor-pointer">
-                    <div className="relative aspect-video overflow-hidden bg-[#111]">
-                      <Image src={thumbnailUrl(sermon)} alt={sermon.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30">
-                        <div className="w-12 h-12 bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
-                          <PlayIcon />
+                  <article className="group cursor-pointer rounded-lg overflow-hidden bg-white/5 border border-white/8 hover:border-white/18 transition-all duration-300 hover:-translate-y-0.5">
+                    <div className="relative aspect-video overflow-hidden bg-[#1a1a2e]">
+                      <Image
+                        src={thumbnailUrl(sermon)}
+                        alt={sermon.title}
+                        fill
+                        className="object-cover opacity-80 group-hover:opacity-95 group-hover:scale-105 transition-all duration-500"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="w-11 h-11 rounded-full bg-white/20 border border-white/40 flex items-center justify-center backdrop-blur-sm">
+                          <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
                         </div>
                       </div>
-                      <div className="absolute top-2.5 left-2.5 bg-black/60 px-2 py-0.5 text-[0.68rem] font-medium text-white/90 tracking-[-0.01em]">{sermon.category}</div>
+                      <div className="absolute top-2.5 left-2.5 bg-black/55 backdrop-blur-sm px-2 py-0.5 text-[0.68rem] font-medium text-white/85 rounded">
+                        {sermon.category}
+                      </div>
                     </div>
-                    <div className="p-5">
-                      <h3 className="text-[0.95rem] font-bold text-[#222] tracking-[-0.03em] leading-[1.4] mb-2 group-hover:text-primary transition-colors">{sermon.title}</h3>
-                      {sermon.scripture && <p className="text-[0.78rem] text-[#888] tracking-[-0.02em]">{sermon.scripture}</p>}
-                      <div className="mt-3 pt-3 border-t border-[#f0f0f0] flex items-center justify-between">
-                        <p className="text-[0.75rem] text-[#999] tracking-[-0.02em]">{sermon.pastor}</p>
-                        <p className="text-[0.75rem] text-[#bbb] tracking-[-0.02em]">{formatDate(sermon.date)}</p>
+
+                    <div className="p-4">
+                      <h3 className="text-[0.9rem] font-semibold text-white/90 tracking-[-0.03em] leading-[1.45] mb-1.5 group-hover:text-white transition-colors line-clamp-2">
+                        {sermon.title}
+                      </h3>
+                      {sermon.scripture && (
+                        <p className="text-[0.75rem] text-white/40 tracking-[-0.01em] mb-3">
+                          {sermon.scripture}
+                        </p>
+                      )}
+                      <div className="flex items-center justify-between pt-3 border-t border-white/8">
+                        <p className="text-[0.72rem] text-white/40 tracking-[-0.01em]">
+                          {sermon.pastor}
+                        </p>
+                        <p className="text-[0.72rem] text-white/25 tracking-[-0.01em]">
+                          {formatDate(sermon.date)}
+                        </p>
                       </div>
                     </div>
                   </article>
@@ -156,18 +231,19 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
             </div>
 
             {list.length === 0 && (
-              <div className="text-center py-16">
-                <p className="text-[0.95rem] text-[#999]">해당 카테고리의 설교가 없습니다.</p>
+              <div className="text-center py-20">
+                <p className="text-[0.95rem] text-white/30">
+                  해당 카테고리의 설교가 없습니다.
+                </p>
               </div>
             )}
 
-            {/* 페이징 */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-1 mt-10">
+              <div className="flex items-center justify-center gap-1 mt-12">
                 <button
-                  onClick={() => { setPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  onClick={() => { setPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                   disabled={page === 1}
-                  className="px-3 py-2 text-[0.8rem] text-[#888] hover:text-[#333] disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="px-3 py-2 text-[0.8rem] text-white/40 hover:text-white/70 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                 >
                   ← 이전
                 </button>
@@ -175,19 +251,19 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
                   <button
                     key={p}
                     onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                    className={`w-9 h-9 text-[0.8rem] font-medium transition-colors ${
+                    className={`w-9 h-9 text-[0.8rem] font-medium rounded-lg transition-all ${
                       page === p
-                        ? "bg-primary text-white"
-                        : "text-[#888] hover:bg-[#eee]"
+                        ? "bg-white text-[#0d0d0d]"
+                        : "text-white/40 hover:bg-white/10 hover:text-white/70"
                     }`}
                   >
                     {p}
                   </button>
                 ))}
                 <button
-                  onClick={() => { setPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                   disabled={page === totalPages}
-                  className="px-3 py-2 text-[0.8rem] text-[#888] hover:text-[#333] disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="px-3 py-2 text-[0.8rem] text-white/40 hover:text-white/70 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
                 >
                   다음 →
                 </button>
