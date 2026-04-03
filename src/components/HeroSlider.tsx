@@ -63,7 +63,7 @@ declare global {
 const FADE_DURATION = 2000;
 const VOLUME_FADE_SECS = 3;
 const PRELOAD_OFFSET = 3;
-const INITIAL_DELAY = 3000; // 첫 재생 전 버퍼링 대기 시간 (ms)
+const INITIAL_DELAY = 1500; // 첫 재생 전 버퍼링 대기 시간 (ms)
 const PLAYER_ID = "hero-yt-player";
 
 export default function HeroSlider() {
