@@ -183,9 +183,7 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50" onMouseLeave={handleMouseLeave}>
 
       {/* 헤더 바 */}
-      <div className={`bg-white lg:mx-4 lg:mt-3 lg:border lg:border-[#e8e8e8] lg:shadow-[0_2px_16px_rgba(0,0,0,0.08)] border-b border-[#e0e0e0] lg:border-b-0 transition-[border-radius] duration-200 ${
-        activeMenu ? "lg:rounded-t-2xl" : "lg:rounded-2xl"
-      }`}>
+      <div className="bg-white border-b border-[#e8e8e8] lg:shadow-[0_1px_8px_rgba(0,0,0,0.06)]">
         <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
           <div className="flex h-[70px] lg:h-[90px] items-center justify-between">
             <Link href="/" className="flex items-center shrink-0">
@@ -241,7 +239,7 @@ export default function Header() {
 
       {/* Desktop Dropdown — Stacker Style */}
       <div
-        className={`hidden lg:block absolute left-4 right-4 bg-white rounded-b-2xl border border-t-0 border-[#e8e8e8] shadow-[0_12px_40px_rgba(0,0,0,0.1)] -mt-[1px] transition-all duration-300 ${
+        className={`hidden lg:block absolute left-0 right-0 bg-white border-b border-[#e8e8e8] shadow-[0_8px_30px_rgba(0,0,0,0.08)] -mt-[1px] transition-all duration-300 ${
           activeMenu ? "opacity-100 pointer-events-auto translate-y-0" : "opacity-0 pointer-events-none -translate-y-2"
         }`}
         onMouseEnter={cancelLeave}
