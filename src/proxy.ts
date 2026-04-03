@@ -5,10 +5,8 @@ import { jwtVerify } from "jose";
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // /admin/login은 통과
   if (pathname === "/admin/login") return NextResponse.next();
 
-  // /admin/* 경로 보호
   if (pathname.startsWith("/admin")) {
     const token = request.cookies.get("admin-session")?.value;
     if (!token) {
