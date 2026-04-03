@@ -63,13 +63,14 @@ declare global {
 const FADE_DURATION = 2000;
 const VOLUME_FADE_SECS = 3;
 const PRELOAD_OFFSET = 3;
-const INITIAL_DELAY = 1500; // 첫 재생 전 버퍼링 대기 시간 (ms)
+const INITIAL_DELAY = 0; // 버퍼링 완료 즉시 재생
 const PLAYER_ID = "hero-yt-player";
 
 export default function HeroSlider() {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [pageReady, setPageReady] = useState(false);
 
   const playerRef = useRef<YTPlayer | null>(null);
   const watcherRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -175,7 +176,9 @@ export default function HeroSlider() {
     }
     playerRef.current.playVideo();
     setShowVideo(true);
-  }, []);
+    // 첫 재생 시 로딩 화면 제거
+    if (!pageReady) setPageReady(true);
+  }, [pageReady]);
 
   // 숨긴 채로 구간 시작 전부터 미리 재생 (강제 음소거)
   const preloadSegment = useCallback(() => {
@@ -456,6 +459,17 @@ export default function HeroSlider() {
           )}
         </button>
       </div>
+
+      {/* 로딩 오버레이 — 영상 준비될 때까지 표시 */}
+      {!pageReady && (
+        <div
+          className="absolute inset-0 z-[10] bg-[#294a3a] flex flex-col items-center justify-center transition-opacity duration-700"
+          style={{ opacity: pageReady ? 0 : 1 }}
+        >
+          <p className="text-white/90 text-[1.2rem] font-bold tracking-[-0.03em] mb-3">강남교회</p>
+          <div className="w-8 h-8 border-2 border-white/20 border-t-white/80 rounded-full animate-spin" />
+        </div>
+      )}
     </section>
   );
 }
