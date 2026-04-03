@@ -125,7 +125,7 @@ export default function HeroSlider() {
               playerRef.current.pauseVideo();
             }
           }, 80);
-        } else if (ratio > 0.95 && scrolledAway.current) {
+        } else if (ratio > 0.5 && scrolledAway.current) {
           // 화면 전부 보임 → 재생 재개 + 볼륨 페이드 인
           scrolledAway.current = false;
           if (!playerRef.current) return;
@@ -152,7 +152,7 @@ export default function HeroSlider() {
           }, 80);
         }
       },
-      { threshold: [0, 0.1, 0.2, 0.33, 0.5, 0.7, 0.9, 0.95, 1.0] }
+      { threshold: [0, 0.1, 0.2, 0.33, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] }
     );
 
     observer.observe(section);
