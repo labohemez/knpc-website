@@ -39,15 +39,20 @@ function formatDate(d: string) {
   return d.replace(/-/g, ".");
 }
 
+const PER_PAGE = 12;
+
 export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
   const [activeCategory, setActiveCategory] = useState("전체");
+  const [page, setPage] = useState(1);
 
   const filtered = activeCategory === "전체"
     ? sermons
     : sermons.filter((s) => s.category === activeCategory);
 
   const featured = sermons[0];
-  const list = activeCategory === "전체" ? filtered.slice(1) : filtered;
+  const allList = activeCategory === "전체" ? filtered.slice(1) : filtered;
+  const totalPages = Math.ceil(allList.length / PER_PAGE);
+  const list = allList.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   return (
     <>
@@ -112,7 +117,7 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
             <ScrollReveal>
               <div className="flex items-center gap-2 flex-wrap mb-8 lg:mb-10">
                 {categories.map((cat) => (
-                  <button key={cat} onClick={() => setActiveCategory(cat)}
+                  <button key={cat} onClick={() => { setActiveCategory(cat); setPage(1); }}
                     className={`px-5 py-2 text-[0.82rem] font-medium tracking-[-0.02em] transition-colors duration-200 ${
                       activeCategory === cat
                         ? "bg-primary text-white"
@@ -153,6 +158,39 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
             {list.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-[0.95rem] text-[#999]">해당 카테고리의 설교가 없습니다.</p>
+              </div>
+            )}
+
+            {/* 페이징 */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-1 mt-10">
+                <button
+                  onClick={() => { setPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  disabled={page === 1}
+                  className="px-3 py-2 text-[0.8rem] text-[#888] hover:text-[#333] disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  ← 이전
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    className={`w-9 h-9 text-[0.8rem] font-medium transition-colors ${
+                      page === p
+                        ? "bg-primary text-white"
+                        : "text-[#888] hover:bg-[#eee]"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                ))}
+                <button
+                  onClick={() => { setPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  disabled={page === totalPages}
+                  className="px-3 py-2 text-[0.8rem] text-[#888] hover:text-[#333] disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  다음 →
+                </button>
               </div>
             )}
           </div>

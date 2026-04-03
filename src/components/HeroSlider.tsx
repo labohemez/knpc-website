@@ -460,14 +460,20 @@ export default function HeroSlider() {
         </button>
       </div>
 
-      {/* 로딩 오버레이 — 영상 준비될 때까지 표시 */}
+      {/* 로딩 오버레이 — 영상 준비될 때까지 포스터 이미지 표시 */}
       {!pageReady && (
-        <div
-          className="absolute inset-0 z-[10] bg-[#294a3a] flex flex-col items-center justify-center transition-opacity duration-700"
-          style={{ opacity: pageReady ? 0 : 1 }}
-        >
-          <p className="text-white/90 text-[1.2rem] font-bold tracking-[-0.03em] mb-3">강남교회</p>
-          <div className="w-8 h-8 border-2 border-white/20 border-t-white/80 rounded-full animate-spin" />
+        <div className="absolute inset-0 z-[10]">
+          <Image
+            src={backgroundVideo.poster}
+            alt="강남교회"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          </div>
         </div>
       )}
     </section>
