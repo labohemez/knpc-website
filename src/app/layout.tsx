@@ -33,6 +33,11 @@ export default function RootLayout({
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
+        {/* YouTube IFrame API 미리 로드 */}
+        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="dns-prefetch" href="https://www.youtube.com" />
+        <script src="https://www.youtube.com/iframe_api" async />
       </head>
       <body className="min-h-full flex flex-col pb-16 lg:pb-0">
         {children}
