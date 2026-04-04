@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       (resolve, reject) => {
         cloudinary.uploader
           .upload_stream(
-            { folder: "bulletin/temp", resource_type: "image" },
+            { folder: "bulletin/temp", resource_type: "image", transformation: [{ density: 300 }] },
             (error, result) => {
               if (error) reject(error);
               else resolve(result as { secure_url: string; public_id: string });

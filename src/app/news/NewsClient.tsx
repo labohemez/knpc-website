@@ -21,7 +21,7 @@ function formatDate(d: string) {
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 function pageUrl(publicId: string, page: number) {
-  return `https://res.cloudinary.com/${cloudName}/image/upload/w_3000,f_png,pg_${page}/${publicId}`;
+  return `https://res.cloudinary.com/${cloudName}/image/upload/w_2400,f_png,pg_${page}/${publicId}`;
 }
 
 export default function NewsClient({
