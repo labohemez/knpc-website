@@ -258,7 +258,7 @@ export default function Header() {
                   {item.name}
                 </Link>
                 <div className="flex flex-col gap-0.5">
-                  {item.groups.flatMap(g => g.children).slice(0, 6).map((child) => (
+                  {item.groups.flatMap(g => g.children).slice(0, 7).map((child) => (
                     <Link
                       key={child.name}
                       href={child.href}
