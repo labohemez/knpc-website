@@ -22,6 +22,7 @@ function toWatchUrl(url: string): string {
 }
 
 function thumbnailUrl(sermon: Sermon): string {
+  if (sermon.thumbnailUrl) return sermon.thumbnailUrl;
   if (sermon.videoUrl) {
     const id = extractYoutubeId(sermon.videoUrl);
     if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
@@ -196,18 +197,35 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
                     className="bg-white rounded-lg overflow-hidden border border-[#ece8e2] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer">
                     {/* 썸네일 */}
                     <div className="relative aspect-video overflow-hidden">
-                      <Image
-                        src={thumbnailUrl(sermon)}
-                        alt={sermon.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                      {sermon.audioUrl && !sermon.videoUrl ? (
+                        <>
+                          <Image src="/images/dawn-bg.png" alt="새벽기도회" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                          {sermon.scripture && (
+                            <div className="absolute inset-0 flex items-center justify-end pr-8 -translate-y-3">
+                              <span className="text-black/70 text-[1.2rem] font-light drop-shadow">{sermon.scripture.split(" ")[0]}</span>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <Image
+                          src={thumbnailUrl(sermon)}
+                          alt={sermon.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      )}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10">
                         <div className="hover:scale-110 transition-all duration-300 drop-shadow-lg">
-                          <svg className="w-10 h-7" viewBox="0 0 68 48">
-                            <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/>
-                            <path d="M45 24L27 14v20" fill="white"/>
-                          </svg>
+                          {sermon.audioUrl ? (
+                            <svg className="w-10 h-10 text-white drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+                            </svg>
+                          ) : (
+                            <svg className="w-10 h-7" viewBox="0 0 68 48">
+                              <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/>
+                              <path d="M45 24L27 14v20" fill="white"/>
+                            </svg>
+                          )}
                         </div>
                       </div>
                       <span className="absolute top-2.5 left-2.5 bg-[#294a3a]/80 text-white text-[0.65rem] font-medium px-2 py-0.5 rounded">
@@ -258,19 +276,32 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
                 >
                   ← 이전
                 </button>
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                  <button
-                    key={p}
-                    onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                    className={`w-9 h-9 text-[0.8rem] font-medium rounded-lg cursor-pointer transition-all ${
-                      page === p
-                        ? "bg-[#294a3a] text-white"
-                        : "text-[#aaa] hover:bg-[#f0ede8] hover:text-[#555]"
-                    }`}
-                  >
-                    {p}
-                  </button>
-                ))}
+                {(() => {
+                  const delta = 4;
+                  const start = Math.max(1, page - delta);
+                  const end = Math.min(totalPages, page + delta);
+                  const pages: (number | "...")[] = [];
+                  if (start > 1) { pages.push(1); if (start > 2) pages.push("..."); }
+                  for (let i = start; i <= end; i++) pages.push(i);
+                  if (end < totalPages) { if (end < totalPages - 1) pages.push("..."); pages.push(totalPages); }
+                  return pages.map((p, idx) =>
+                    p === "..." ? (
+                      <span key={`ellipsis-${idx}`} className="px-1 text-[0.8rem] text-[#aaa]">…</span>
+                    ) : (
+                      <button
+                        key={p}
+                        onClick={() => { setPage(p as number); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        className={`w-9 h-9 text-[0.8rem] font-medium rounded-lg cursor-pointer transition-all ${
+                          page === p
+                            ? "bg-[#294a3a] text-white"
+                            : "text-[#aaa] hover:bg-[#f0ede8] hover:text-[#555]"
+                        }`}
+                      >
+                        {p}
+                      </button>
+                    )
+                  );
+                })()}
                 <button
                   onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                   disabled={page === totalPages}
@@ -284,33 +315,68 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
         </section>
       </main>
 
-      {/* ── 영상 모달 ── */}
-      {modal && modal.videoUrl && (
-        <div className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center p-4" onClick={() => setModal(null)}>
-          <button onClick={() => setModal(null)} className="absolute top-4 right-4 lg:top-6 lg:right-6 w-10 h-10 flex items-center justify-center text-white/70 hover:text-white z-10">
-            <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div className="w-full max-w-[900px]" onClick={(e) => e.stopPropagation()}>
-            <div className="relative w-full aspect-video bg-black rounded-lg overflow-hidden">
-              <iframe
-                src={`https://www.youtube.com/embed/${extractYoutubeId(modal.videoUrl)}?autoplay=1&rel=0`}
-                className="absolute inset-0 w-full h-full"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              />
-            </div>
-            <div className="mt-4">
-              <h3 className="text-white text-[1.1rem] font-bold tracking-[-0.03em]">{modal.title}</h3>
-              <div className="flex items-center gap-2 mt-1.5">
-                {modal.scripture && <p className="text-white/50 text-[0.8rem]">{modal.scripture}</p>}
-                <span className="text-white/20">·</span>
-                <p className="text-white/40 text-[0.8rem]">{modal.pastor}</p>
-                <span className="text-white/20">·</span>
-                <p className="text-white/30 text-[0.8rem]">{formatDate(modal.date)}</p>
+      {/* ── 영상/오디오 모달 ── */}
+      {modal && (modal.videoUrl || modal.audioUrl) && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 lg:p-8" style={{ backgroundColor: "rgba(0,0,0,0.85)", backdropFilter: "blur(6px)" }} onClick={() => setModal(null)}>
+          <div className="w-full max-w-[820px] relative" onClick={(e) => e.stopPropagation()}>
+            {/* 닫기 버튼 */}
+            <button onClick={() => setModal(null)} className="absolute -top-11 right-0 flex items-center gap-1.5 text-white/50 hover:text-white text-[0.78rem] transition-colors">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              닫기
+            </button>
+
+            {modal.videoUrl ? (
+              <>
+                <div className="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${extractYoutubeId(modal.videoUrl)}?autoplay=1&rel=0`}
+                    className="absolute inset-0 w-full h-full"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="mt-4 px-1">
+                  <h3 className="text-white text-[1.05rem] font-bold tracking-[-0.03em]">{modal.title}</h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    {modal.scripture && <span className="text-white/50 text-[0.78rem]">{modal.scripture}</span>}
+                    {modal.scripture && modal.pastor && <span className="text-white/20 text-[0.7rem]">·</span>}
+                    {modal.pastor && <span className="text-white/40 text-[0.78rem]">{modal.pastor}</span>}
+                    <span className="text-white/20 text-[0.7rem]">·</span>
+                    <span className="text-white/30 text-[0.78rem]">{formatDate(modal.date)}</span>
+                  </div>
+                </div>
+              </>
+            ) : modal.audioUrl ? (
+              <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ background: "#1a2e24" }}>
+                {/* 정보 */}
+                <div className="px-6 pt-6 pb-2">
+                  <span className="inline-block text-[0.68rem] font-semibold tracking-widest text-[#c69d6c] uppercase mb-2">새벽기도회</span>
+                  <h3 className="text-white text-[1.1rem] font-bold tracking-[-0.03em] leading-snug">{modal.title}</h3>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    {modal.scripture && <span className="text-white/50 text-[0.78rem]">{modal.scripture}</span>}
+                    {modal.scripture && modal.pastor && <span className="text-white/20">·</span>}
+                    {modal.pastor && <span className="text-white/40 text-[0.78rem]">{modal.pastor}</span>}
+                    <span className="text-white/20">·</span>
+                    <span className="text-white/30 text-[0.78rem]">{formatDate(modal.date)}</span>
+                  </div>
+                </div>
+                {/* 플레이어 */}
+                <div className="px-6 pb-6 pt-4">
+                  <div className="rounded-xl overflow-hidden">
+                    <iframe
+                      src={modal.audioUrl}
+                      width="100%"
+                      height="166"
+                      scrolling="no"
+                      allow="autoplay"
+                      style={{ display: "block", border: "none" }}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
       )}
