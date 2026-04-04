@@ -12,7 +12,13 @@ function thumbUrl(publicId: string, page: number) {
 
 export default function BulletinNewPage() {
   const router = useRouter();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = (() => {
+    const d = new Date();
+    const day = d.getDay(); // 0=일, 1=월 ... 6=토
+    const daysUntilSunday = day === 0 ? 7 : 7 - day;
+    d.setDate(d.getDate() + daysUntilSunday);
+    return d.toISOString().slice(0, 10);
+  })();
 
   const [uploading, setUploading] = useState(false);
   const [publicId, setPublicId] = useState<string | null>(null);
