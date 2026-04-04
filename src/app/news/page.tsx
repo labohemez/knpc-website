@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getNews, type NewsItem } from "@/lib/queries";
 import { supabaseAdmin } from "@/lib/supabase";
 import NewsClient from "./NewsClient";
@@ -59,5 +60,9 @@ export default async function NewsPage() {
 
   const bulletinItems: BulletinItem[] = data ?? [];
 
-  return <NewsClient notices={notices} churchNews={churchNews} bulletinItems={bulletinItems} />;
+  return (
+    <Suspense fallback={null}>
+      <NewsClient notices={notices} churchNews={churchNews} bulletinItems={bulletinItems} />
+    </Suspense>
+  );
 }

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getSermons, type Sermon } from "@/lib/queries";
 import SermonsClient from "./SermonsClient";
 import type { Metadata } from "next";
@@ -29,5 +30,9 @@ export default async function SermonsPage() {
     sermons = fallbackSermons;
   }
 
-  return <SermonsClient sermons={sermons} />;
+  return (
+    <Suspense fallback={null}>
+      <SermonsClient sermons={sermons} />
+    </Suspense>
+  );
 }
