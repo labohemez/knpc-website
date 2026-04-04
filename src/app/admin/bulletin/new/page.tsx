@@ -8,7 +8,7 @@ const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 // PDF 원본 순서 → 올바른 순서 매핑 (예: 원본 1번째 페이지가 실제 1번, 원본 2번째가 실제 3번...)
 // "1,4,2,6,3,5" 형식으로 입력 — 원본 PDF의 페이지 순서를 의미
-const DEFAULT_PAGE_ORDER = "1,4,2,6,3,5";
+const DEFAULT_PAGE_ORDER = "4,6,1,2,3,5";
 
 function parseOrder(str: string, pageCount: number): number[] {
   const parsed = str.split(",").map((s) => parseInt(s.trim(), 10)).filter((n) => !isNaN(n) && n >= 1 && n <= pageCount);
