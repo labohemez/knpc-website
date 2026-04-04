@@ -28,7 +28,7 @@ export default function PdfViewer({ url, pageCount }: Props) {
           if (cancelled) break;
 
           const page = await pdf.getPage(i + 1);
-          const viewport = page.getViewport({ scale: 2.0 });
+          const viewport = page.getViewport({ scale: 2.5 });
 
           const canvas = document.createElement("canvas");
           canvas.width = viewport.width;
