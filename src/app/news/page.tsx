@@ -4,6 +4,8 @@ import { supabaseAdmin } from "@/lib/supabase";
 import NewsClient from "./NewsClient";
 import type { Metadata } from "next";
 
+export const revalidate = 1800; // 30분마다 갱신 (토요일 오후 1시 공개 대응)
+
 export type BulletinItem = {
   id: string;
   date: string;
@@ -55,6 +57,7 @@ export default async function NewsPage() {
   const { data } = await supabaseAdmin
     .from("bulletins")
     .select("id, date, title, pdf_public_id, pdf_url, page_count")
+    .lte("publish_at", new Date().toISOString())
     .order("date", { ascending: false })
     .limit(30);
 

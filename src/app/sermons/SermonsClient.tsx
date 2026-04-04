@@ -63,15 +63,17 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
       <main className="flex-1 flex flex-col">
 
         {/* ── 히어로 배너 ── */}
-        <section className="relative h-[180px] lg:h-[220px] flex items-end pb-6 lg:pb-8 overflow-hidden bg-[#294a3a]">
+        <section className="relative h-[200px] lg:h-[260px] flex items-end overflow-hidden bg-[#294a3a]">
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 21px)" }} />
-          <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full flex items-end justify-between">
-            <h1 className="text-[1.6rem] lg:text-[2.2rem] font-bold text-white tracking-[0.05em] leading-[1.15]">
-              예배
+          {/* 장식 원 */}
+          <div className="absolute right-[-60px] top-[-60px] w-[320px] h-[320px] rounded-full opacity-[0.06]" style={{ background: "radial-gradient(circle, #c69d6c, transparent 70%)" }} />
+          <div className="absolute right-[120px] bottom-[-80px] w-[200px] h-[200px] rounded-full opacity-[0.05]" style={{ background: "radial-gradient(circle, #ffffff, transparent 70%)" }} />
+          <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full pb-4 lg:pb-5">
+            <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-[#c69d6c] uppercase mb-2">Worship</p>
+            <h1 className="text-[2rem] lg:text-[2.8rem] font-bold text-white tracking-[-0.02em] leading-[1.1]">
+              말씀과 찬양
             </h1>
-            <p className="hidden lg:block text-[0.72rem] text-white/30 tracking-[-0.01em] pb-1">
-              총 {sermons.length}편의 설교
-            </p>
+            <p className="text-white/50 text-[0.95rem] mt-2 tracking-[-0.01em] font-medium">{activeCategory}</p>
           </div>
         </section>
 
@@ -155,7 +157,7 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
             <ScrollReveal>
               <div className="mb-8 lg:mb-10 space-y-3">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[0.68rem] font-semibold text-[#aaa] tracking-[0.05em] uppercase mr-1">설교</span>
+                  <span className="text-[0.72rem] font-bold text-white bg-[#294a3a] px-2.5 py-1 rounded tracking-[0.05em]">설교</span>
                   {sermonCategories.map((cat) => (
                     <button
                       key={cat}
@@ -171,7 +173,7 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
                   ))}
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[0.68rem] font-semibold text-[#aaa] tracking-[0.05em] uppercase mr-1">찬양</span>
+                  <span className="text-[0.72rem] font-bold text-white bg-[#c69d6c] px-2.5 py-1 rounded tracking-[0.05em]">찬양</span>
                   {praiseCategories.map((cat) => (
                     <button
                       key={cat}

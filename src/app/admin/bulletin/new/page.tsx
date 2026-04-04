@@ -35,6 +35,8 @@ export default function BulletinNewPage() {
   const [pageCount, setPageCount] = useState(0);
   const [pages, setPages] = useState<number[]>([]);
   const [date, setDate] = useState(today);
+  const [customPublish, setCustomPublish] = useState(false);
+  const [customPublishAt, setCustomPublishAt] = useState("");
   const [orderInput, setOrderInput] = useState(DEFAULT_PAGE_ORDER);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -106,6 +108,9 @@ export default function BulletinNewPage() {
       fd.append("page_order", JSON.stringify(pages));
       fd.append("date", date);
       fd.append("temp_public_id", publicId);
+      if (customPublish && customPublishAt) {
+        fd.append("publish_at_override", new Date(customPublishAt + ":00+09:00").toISOString());
+      }
 
       const res = await fetch("/api/admin/reorder-pdf", { method: "POST", body: fd });
       const data = await res.json();
@@ -139,6 +144,45 @@ export default function BulletinNewPage() {
               onChange={(e) => setDate(e.target.value)}
               className="px-3 py-2 border border-[#e0e0e0] rounded text-[0.85rem] focus:outline-none focus:border-[#294a3a]"
             />
+          </div>
+          <div>
+            <label className="block text-[0.78rem] font-medium text-[#555] mb-1.5">공개 시각 (KST)</label>
+            <div className="flex items-center gap-2">
+              {!customPublish && (
+                <span className="px-3 py-2 text-[0.82rem] text-[#aaa] border border-[#e0e0e0] rounded bg-[#fafafa]">
+                  {date ? (() => {
+                    const d = new Date(`${date}T04:00:00Z`);
+                    d.setUTCDate(d.getUTCDate() - 1);
+                    return d.toLocaleString("ko-KR", { timeZone: "Asia/Seoul", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" });
+                  })() : "날짜 선택 후 자동 설정"}
+                </span>
+              )}
+              {customPublish && (
+                <input
+                  type="datetime-local"
+                  value={customPublishAt}
+                  onChange={e => setCustomPublishAt(e.target.value)}
+                  className="px-3 py-2 border border-[#294a3a] rounded text-[0.85rem] focus:outline-none"
+                />
+              )}
+              <label className="flex items-center gap-1.5 text-[0.75rem] text-[#666] cursor-pointer select-none whitespace-nowrap">
+                <input
+                  type="checkbox"
+                  checked={customPublish}
+                  onChange={e => {
+                    setCustomPublish(e.target.checked);
+                    if (e.target.checked && date) {
+                      const d = new Date(`${date}T04:00:00Z`);
+                      d.setUTCDate(d.getUTCDate() - 1);
+                      const kst = new Date(d.getTime() + 9 * 60 * 60 * 1000);
+                      setCustomPublishAt(kst.toISOString().slice(0, 16));
+                    }
+                  }}
+                  className="accent-[#294a3a]"
+                />
+                직접 설정
+              </label>
+            </div>
           </div>
           <div>
             <label className="block text-[0.78rem] font-medium text-[#555] mb-1.5">페이지 순서 (원본 기준)</label>

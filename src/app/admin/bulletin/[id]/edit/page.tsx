@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import AdminShell from "../../../components/AdminShell";
-import { deleteBulletin } from "../../actions";
+import { deleteBulletin, updateBulletinDate } from "../../actions";
 
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
@@ -25,6 +25,10 @@ export default function BulletinEditPage() {
 
   const [bulletin, setBulletin] = useState<Bulletin | null>(null);
   const [loading, setLoading] = useState(true);
+  const [editDate, setEditDate] = useState("");
+  const [customPublish, setCustomPublish] = useState(false);
+  const [customPublishAt, setCustomPublishAt] = useState("");
+  const [savingDate, setSavingDate] = useState(false);
 
   // 새 PDF 업로드용 상태
   const [uploading, setUploading] = useState(false);
@@ -42,6 +46,7 @@ export default function BulletinEditPage() {
       .then((r) => r.json())
       .then((data) => {
         setBulletin(data);
+        setEditDate(data.date);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -144,6 +149,71 @@ export default function BulletinEditPage() {
           <div className="flex items-center gap-3 mb-6">
             <button onClick={() => router.back()} className="text-[0.8rem] text-[#666] hover:text-[#333] cursor-pointer">← 뒤로</button>
             <h1 className="text-[1.1rem] font-bold text-[#1a1a1a]">{bulletin.title}</h1>
+          </div>
+
+          {/* 날짜 수정 */}
+          <div className="mb-6 p-4 bg-[#f9f9f9] border border-[#e8e8e8] rounded">
+            <p className="text-[0.78rem] font-medium text-[#555] mb-3">날짜 / 공개 시각 수정</p>
+            <div className="flex items-center gap-2 flex-wrap">
+              <input
+                type="date"
+                value={editDate}
+                onChange={e => setEditDate(e.target.value)}
+                className="px-3 py-2 text-[0.82rem] border border-[#ddd] rounded focus:border-[#294a3a] outline-none"
+              />
+              <span className="text-[0.75rem] text-[#aaa]">공개 시각 (KST)</span>
+              {!customPublish && (
+                <span className="px-3 py-2 text-[0.82rem] text-[#aaa] border border-[#e0e0e0] rounded bg-white">
+                  {editDate ? (() => {
+                    const d = new Date(`${editDate}T04:00:00Z`);
+                    d.setUTCDate(d.getUTCDate() - 1);
+                    return d.toLocaleString("ko-KR", { timeZone: "Asia/Seoul", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" });
+                  })() : "—"}
+                </span>
+              )}
+              {customPublish && (
+                <input
+                  type="datetime-local"
+                  value={customPublishAt}
+                  onChange={e => setCustomPublishAt(e.target.value)}
+                  className="px-3 py-2 border border-[#294a3a] rounded text-[0.82rem] focus:outline-none"
+                />
+              )}
+              <label className="flex items-center gap-1.5 text-[0.75rem] text-[#666] cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={customPublish}
+                  onChange={e => {
+                    setCustomPublish(e.target.checked);
+                    if (e.target.checked && editDate) {
+                      const d = new Date(`${editDate}T04:00:00Z`);
+                      d.setUTCDate(d.getUTCDate() - 1);
+                      const kst = new Date(d.getTime() + 9 * 60 * 60 * 1000);
+                      setCustomPublishAt(kst.toISOString().slice(0, 16));
+                    }
+                  }}
+                  className="accent-[#294a3a]"
+                />
+                직접 설정
+              </label>
+              <button
+                onClick={async () => {
+                  if (!bulletin || !editDate) return;
+                  setSavingDate(true);
+                  const publishAt = customPublish && customPublishAt
+                    ? new Date(customPublishAt + ":00+09:00").toISOString()
+                    : undefined;
+                  const result = await updateBulletinDate(bulletin.id, editDate, publishAt);
+                  if (result.ok) setBulletin(prev => prev ? { ...prev, date: editDate } : prev);
+                  else alert("저장 실패: " + result.error);
+                  setSavingDate(false);
+                }}
+                disabled={savingDate || (editDate === bulletin.date && !customPublish)}
+                className="px-4 py-2 bg-[#294a3a] text-white text-[0.8rem] font-medium rounded hover:bg-[#1e3a2c] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
+              >
+                {savingDate ? "저장 중..." : "저장"}
+              </button>
+            </div>
           </div>
 
           {/* 현재 주보 페이지 미리보기 */}

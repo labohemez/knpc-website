@@ -62,6 +62,16 @@ export async function POST(request: NextRequest) {
       folder, public_id: `dl_${publicId}`, resource_type: "raw", overwrite: true,
     });
 
+    // 공개 시각: 직접 지정 또는 자동 계산 (주일 전날 토 13:00 KST = UTC 04:00)
+    const publishAtOverride = formData.get("publish_at_override") as string | null;
+    const publishAt = publishAtOverride
+      ? new Date(publishAtOverride)
+      : (() => {
+          const d = new Date(`${date}T04:00:00Z`);
+          d.setUTCDate(d.getUTCDate() - 1);
+          return d;
+        })();
+
     // Supabase 저장
     const payload = {
       date,
@@ -69,6 +79,7 @@ export async function POST(request: NextRequest) {
       pdf_public_id: imageResult.public_id,
       pdf_url: rawResult.secure_url,
       page_count: page_order.length,
+      publish_at: publishAt.toISOString(),
     };
 
     let dbError;

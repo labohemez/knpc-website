@@ -10,6 +10,7 @@ export type SermonFormData = {
   pastor: string;
   date: string;
   video_url: string;
+  audio_url: string;
 };
 
 export async function createSermon(data: SermonFormData) {

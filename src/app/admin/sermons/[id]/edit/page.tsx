@@ -9,11 +9,11 @@ import { updateSermon } from "../../actions";
 
 export default function EditSermonPage() {
   const { id } = useParams<{ id: string }>();
-  const [data, setData] = useState<{ title: string; category: string; scripture: string; pastor: string; date: string; video_url: string } | null>(null);
+  const [data, setData] = useState<{ title: string; category: string; scripture: string; pastor: string; date: string; video_url: string; audio_url: string } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.from("sermons").select("title, category, scripture, pastor, date, video_url").eq("id", id).single().then(({ data }) => {
+    supabase.from("sermons").select("title, category, scripture, pastor, date, video_url, audio_url").eq("id", id).single().then(({ data }) => {
       setData(data);
       setLoading(false);
     });
