@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -10,6 +11,8 @@ import ScrollReveal from "@/components/ScrollReveal";
 import type { NewsItem } from "@/lib/queries";
 import type { BulletinItem } from "./page";
 
+const PdfViewer = dynamic(() => import("@/components/PdfViewer"), { ssr: false });
+
 const tabs = ["공지사항", "교회소식", "주보"] as const;
 type Tab = (typeof tabs)[number];
 
@@ -17,12 +20,9 @@ function formatDate(d: string) {
   return d.replace(/-/g, ".");
 }
 
-
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
-function pageUrl(publicId: string, page: number) {
-  return `https://res.cloudinary.com/${cloudName}/image/upload/w_2400,f_png,pg_${page}/${publicId}`;
-}
+
 
 export default function NewsClient({
   notices,
@@ -174,18 +174,8 @@ export default function NewsClient({
               </button>
             </div>
 
-            {/* 페이지 이미지 순서대로 */}
-            <div className="flex flex-col">
-              {Array.from({ length: selectedBulletin.page_count }, (_, i) => i + 1).map((page) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={page}
-                  src={pageUrl(selectedBulletin.pdf_public_id, page)}
-                  alt={`${page}페이지`}
-                  className="w-full block h-auto"
-                />
-              ))}
-            </div>
+            {/* PDF 직접 렌더링 */}
+            <PdfViewer url={`/api/bulletin/${selectedBulletin.id}/pdf`} />
           </div>
         </div>
       )}
