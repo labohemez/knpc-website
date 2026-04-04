@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import { type Sermon } from "@/lib/queries";
 
-const sermonCategories = ["전체", "주일예배", "수요예배", "금요기도회", "새벽기도회", "특별예배", "청년1부", "청년2,3부"];
+const sermonCategories = ["주일예배", "수요예배", "금요기도회", "새벽기도회", "특별예배", "청년1부", "청년2,3부"];
 const praiseCategories = ["찬양-할렐루야", "찬양-호산나", "찬양-시온", "찬양-주일예배", "찬양-금요기도회", "찬양-기타"];
 
 function extractYoutubeId(url: string): string | null {
@@ -39,19 +39,16 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const catParam = searchParams.get("cat");
-  const [activeCategory, setActiveCategory] = useState(catParam || "전체");
+  const [activeCategory, setActiveCategory] = useState(catParam || "주일예배");
   const [page, setPage] = useState(1);
   const [modal, setModal] = useState<Sermon | null>(null);
 
   useEffect(() => {
-    setActiveCategory(catParam || "전체");
+    setActiveCategory(catParam || "주일예배");
     setPage(1);
   }, [catParam]);
 
-  const filtered =
-    activeCategory === "전체"
-      ? sermons
-      : sermons.filter((s) => s.category === activeCategory);
+  const filtered = sermons.filter((s) => s.category === activeCategory);
 
   const featured = activeCategory === "전체" ? sermons[0] : filtered[0];
   const allList = featured ? filtered.filter(s => s._id !== featured._id) : filtered;
@@ -161,7 +158,7 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
                   {sermonCategories.map((cat) => (
                     <button
                       key={cat}
-                      onClick={() => { setActiveCategory(cat); setPage(1); router.replace(cat === "전체" ? "?" : `?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
+                      onClick={() => { setActiveCategory(cat); setPage(1); router.replace(`?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
                       className={`px-4 py-1.5 text-[0.8rem] font-medium tracking-[-0.01em] rounded-full cursor-pointer transition-all duration-200 ${
                         activeCategory === cat
                           ? "bg-[#294a3a] text-white"
@@ -177,7 +174,7 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
                   {praiseCategories.map((cat) => (
                     <button
                       key={cat}
-                      onClick={() => { setActiveCategory(cat); setPage(1); router.replace(cat === "전체" ? "?" : `?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
+                      onClick={() => { setActiveCategory(cat); setPage(1); router.replace(`?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
                       className={`px-4 py-1.5 text-[0.8rem] font-medium tracking-[-0.01em] rounded-full cursor-pointer transition-all duration-200 ${
                         activeCategory === cat
                           ? "bg-[#c69d6c] text-white"
