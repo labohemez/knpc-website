@@ -175,7 +175,7 @@ export default function NewsClient({
             </div>
 
             {/* PDF 직접 렌더링 */}
-            <PdfViewer url={`/api/bulletin/${selectedBulletin.id}/pdf`} />
+            <PdfViewer url={`/api/bulletin/${selectedBulletin.id}/pdf`} pageCount={selectedBulletin.page_count} />
           </div>
         </div>
       )}
