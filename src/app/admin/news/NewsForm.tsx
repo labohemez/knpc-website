@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import RichTextEditor from "../components/RichTextEditor";
 
-const CATEGORIES = ["공지사항", "모임안내", "교회소식", "교회주보", "교우소식"];
+const CATEGORIES = ["공지사항", "모임안내", "교회소식", "교우소식"];
 
 interface Props {
   initial?: { title: string; category: string; date: string; body: string; is_new: boolean };

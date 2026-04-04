@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import { type Sermon } from "@/lib/queries";
 
-const categories = ["전체", "주일예배", "수요예배", "새벽기도회", "금요기도회", "특별예배", "청년예배"];
+const sermonCategories = ["전체", "주일예배", "수요예배", "금요기도회", "새벽기도회", "특별예배", "청년1부", "청년2,3부"];
+const praiseCategories = ["찬양-할렐루야", "찬양-호산나", "찬양-시온", "찬양-주일예배", "찬양-금요기도회", "찬양-기타"];
 
 function extractYoutubeId(url: string): string | null {
   const match = url.match(/(?:v=|youtu\.be\/|embed\/)([^&?/]+)/);
@@ -33,18 +35,30 @@ function formatDate(d: string) {
 
 const PER_PAGE = 12;
 
-export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
-  const [activeCategory, setActiveCategory] = useState("전체");
+export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const catParam = searchParams.get("cat");
+  const [activeCategory, setActiveCategory] = useState(catParam || "전체");
   const [page, setPage] = useState(1);
   const [modal, setModal] = useState<Sermon | null>(null);
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!initialized && catParam) {
+      setActiveCategory(catParam);
+      setPage(1);
+      setInitialized(true);
+    }
+  }, [catParam, initialized]);
 
   const filtered =
     activeCategory === "전체"
       ? sermons
       : sermons.filter((s) => s.category === activeCategory);
 
-  const featured = sermons[0];
-  const allList = activeCategory === "전체" ? filtered.slice(1) : filtered;
+  const featured = activeCategory === "전체" ? sermons[0] : filtered[0];
+  const allList = featured ? filtered.filter(s => s._id !== featured._id) : filtered;
   const totalPages = Math.ceil(allList.length / PER_PAGE);
   const list = allList.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
@@ -55,25 +69,20 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
       <main className="flex-1 flex flex-col">
 
         {/* ── 히어로 배너 ── */}
-        <section className="relative h-[180px] lg:h-[220px] flex items-end pb-8 lg:pb-10 overflow-hidden bg-[#294a3a]">
+        <section className="relative h-[180px] lg:h-[220px] flex items-end pb-6 lg:pb-8 overflow-hidden bg-[#294a3a]">
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 21px)" }} />
           <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full flex items-end justify-between">
-            <div>
-              <p className="text-[0.65rem] font-semibold tracking-[0.2em] uppercase text-[#c69d6c] mb-1">
-                Sermons
-              </p>
-              <h1 className="text-[1.6rem] lg:text-[2.2rem] font-bold text-white tracking-[-0.04em] leading-[1.15]">
-                말씀과 찬양
-              </h1>
-            </div>
-            <p className="hidden lg:block text-[0.72rem] text-white/30 tracking-[-0.01em]">
+            <h1 className="text-[1.6rem] lg:text-[2.2rem] font-bold text-white tracking-[0.05em] leading-[1.15]">
+              예배
+            </h1>
+            <p className="hidden lg:block text-[0.72rem] text-white/30 tracking-[-0.01em] pb-1">
               총 {sermons.length}편의 설교
             </p>
           </div>
         </section>
 
         {/* ── 최신 설교 ── */}
-        {featured && activeCategory === "전체" && (
+        {featured && (
           <section className="bg-[#faf8f5] py-8 lg:py-12">
             <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
               <ScrollReveal>
@@ -150,20 +159,39 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
 
             {/* 카테고리 필터 */}
             <ScrollReveal>
-              <div className="flex items-center gap-2 flex-wrap mb-8 lg:mb-10">
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => { setActiveCategory(cat); setPage(1); }}
-                    className={`px-4 py-1.5 text-[0.8rem] font-medium tracking-[-0.01em] rounded-full transition-all duration-200 ${
-                      activeCategory === cat
-                        ? "bg-[#294a3a] text-white"
-                        : "bg-white border border-[#e0dcd6] text-[#888] hover:border-[#294a3a] hover:text-[#294a3a]"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
+              <div className="mb-8 lg:mb-10 space-y-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[0.68rem] font-semibold text-[#aaa] tracking-[0.05em] uppercase mr-1">설교</span>
+                  {sermonCategories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => { setActiveCategory(cat); setPage(1); router.replace(cat === "전체" ? "?" : `?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
+                      className={`px-4 py-1.5 text-[0.8rem] font-medium tracking-[-0.01em] rounded-full cursor-pointer transition-all duration-200 ${
+                        activeCategory === cat
+                          ? "bg-[#294a3a] text-white"
+                          : "bg-white border border-[#e0dcd6] text-[#888] hover:border-[#294a3a] hover:text-[#294a3a]"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[0.68rem] font-semibold text-[#aaa] tracking-[0.05em] uppercase mr-1">찬양</span>
+                  {praiseCategories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => { setActiveCategory(cat); setPage(1); router.replace(cat === "전체" ? "?" : `?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
+                      className={`px-4 py-1.5 text-[0.8rem] font-medium tracking-[-0.01em] rounded-full cursor-pointer transition-all duration-200 ${
+                        activeCategory === cat
+                          ? "bg-[#c69d6c] text-white"
+                          : "bg-white border border-[#e0dcd6] text-[#888] hover:border-[#c69d6c] hover:text-[#c69d6c]"
+                      }`}
+                    >
+                      {cat.replace("찬양-", "")}
+                    </button>
+                  ))}
+                </div>
               </div>
             </ScrollReveal>
 
@@ -233,7 +261,7 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
                 <button
                   onClick={() => { setPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                   disabled={page === 1}
-                  className="px-3 py-2 text-[0.8rem] text-[#aaa] hover:text-[#555] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  className="px-3 py-2 text-[0.8rem] text-[#aaa] hover:text-[#555] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors"
                 >
                   ← 이전
                 </button>
@@ -241,7 +269,7 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
                   <button
                     key={p}
                     onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                    className={`w-9 h-9 text-[0.8rem] font-medium rounded-lg transition-all ${
+                    className={`w-9 h-9 text-[0.8rem] font-medium rounded-lg cursor-pointer transition-all ${
                       page === p
                         ? "bg-[#294a3a] text-white"
                         : "text-[#aaa] hover:bg-[#f0ede8] hover:text-[#555]"
@@ -253,7 +281,7 @@ export default function SermonsClient({ sermons }: { sermons: Sermon[] }) {
                 <button
                   onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                   disabled={page === totalPages}
-                  className="px-3 py-2 text-[0.8rem] text-[#aaa] hover:text-[#555] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  className="px-3 py-2 text-[0.8rem] text-[#aaa] hover:text-[#555] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors"
                 >
                   다음 →
                 </button>

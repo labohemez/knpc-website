@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import type { NewsItem } from "@/lib/queries";
+import type { BulletinItem } from "./page";
 
 const tabs = ["공지사항", "교회소식", "주보"] as const;
 type Tab = (typeof tabs)[number];
@@ -15,24 +17,32 @@ function formatDate(d: string) {
   return d.replace(/-/g, ".");
 }
 
-function PdfIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-    </svg>
-  );
+
+const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+function pageUrl(publicId: string, page: number) {
+  return `https://res.cloudinary.com/${cloudName}/image/upload/w_2400,f_png,pg_${page}/${publicId}`;
 }
 
 export default function NewsClient({
   notices,
   churchNews,
-  bulletins,
+  bulletinItems,
 }: {
   notices: NewsItem[];
   churchNews: NewsItem[];
-  bulletins: NewsItem[];
+  bulletinItems: BulletinItem[];
 }) {
-  const [activeTab, setActiveTab] = useState<Tab>("공지사항");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const tabParam = searchParams.get("tab") as Tab | null;
+  const [activeTab, setActiveTab] = useState<Tab>(tabs.includes(tabParam as Tab) ? tabParam! : "공지사항");
+  const [selectedBulletin, setSelectedBulletin] = useState<BulletinItem | null>(null);
+
+  function handleTabChange(tab: Tab) {
+    setActiveTab(tab);
+    router.replace(`?tab=${encodeURIComponent(tab)}`, { scroll: false });
+  }
 
   return (
     <>
@@ -55,8 +65,8 @@ export default function NewsClient({
             <ScrollReveal>
               <div className="flex border-b border-[#eee] mb-8 lg:mb-10">
                 {tabs.map((tab) => (
-                  <button key={tab} onClick={() => setActiveTab(tab)}
-                    className={`px-6 lg:px-8 py-4 text-[0.88rem] font-semibold tracking-[-0.02em] transition-colors duration-200 border-b-2 -mb-[2px] ${
+                  <button key={tab} onClick={() => handleTabChange(tab)}
+                    className={`px-6 lg:px-8 py-4 text-[0.88rem] font-semibold tracking-[-0.02em] transition-colors duration-200 border-b-2 -mb-[2px] cursor-pointer ${
                       activeTab === tab ? "text-primary border-primary" : "text-[#999] border-transparent hover:text-[#555]"
                     }`}>
                     {tab}
@@ -103,22 +113,34 @@ export default function NewsClient({
             {/* 주보 */}
             {activeTab === "주보" && (
               <ScrollReveal>
-                <div className="divide-y divide-[#f0f0f0]">
-                  {bulletins.map((item) => (
-                    <div key={item._id} className="py-4 lg:py-5 flex items-center gap-4 group cursor-pointer hover:bg-[#fafaf8] -mx-4 px-4 transition-colors duration-200">
-                      <div className="text-accent shrink-0"><PdfIcon /></div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-[0.92rem] font-semibold text-[#222] tracking-[-0.03em] group-hover:text-primary transition-colors truncate">{item.title}</h3>
-                        <p className="text-[0.75rem] text-[#bbb] tracking-[-0.02em] mt-0.5">{formatDate(item.date)}</p>
-                      </div>
-                      <div className="shrink-0 text-[#ccc] group-hover:text-primary transition-colors">
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                {bulletinItems.length === 0 ? (
+                  <p className="text-[0.88rem] text-[#bbb] py-12 text-center">등록된 주보가 없습니다.</p>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 lg:gap-7">
+                    {bulletinItems.map((item) => {
+                      const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/w_400,pg_1/${item.pdf_public_id}.jpg`;
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => setSelectedBulletin(item)}
+                          className="group flex flex-col cursor-pointer text-left"
+                        >
+                          <div className="border border-[#e8e8e8] rounded overflow-hidden mb-2.5 shadow-sm group-hover:shadow-md transition-shadow duration-200 bg-white w-full">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={thumb}
+                              alt={item.title}
+                              className="w-full aspect-[3/4] object-contain"
+                            />
+                          </div>
+                          <p className="text-[0.82rem] font-semibold text-[#333] group-hover:text-primary transition-colors text-center w-full tracking-[-0.02em]">
+                            {formatDate(item.date)}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </ScrollReveal>
             )}
           </div>
@@ -126,6 +148,47 @@ export default function NewsClient({
       </main>
 
       <Footer />
+
+      {/* 주보 모달 */}
+      {selectedBulletin && (
+        <div
+          className="fixed inset-0 z-[100] flex items-start justify-center bg-black/70 overflow-y-auto py-8 px-4"
+          onClick={() => setSelectedBulletin(null)}
+        >
+          <div
+            className="relative w-full max-w-[900px] bg-white rounded-lg overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* 헤더 */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#eee] sticky top-0 bg-white z-10">
+              <p className="text-[0.92rem] font-bold text-[#222] tracking-[-0.02em]">
+                {selectedBulletin.title}
+              </p>
+              <button
+                onClick={() => setSelectedBulletin(null)}
+                className="p-1.5 text-[#999] hover:text-[#333] transition-colors cursor-pointer"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* 페이지 이미지 순서대로 */}
+            <div className="flex flex-col">
+              {Array.from({ length: selectedBulletin.page_count }, (_, i) => i + 1).map((page) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={page}
+                  src={pageUrl(selectedBulletin.pdf_public_id, page)}
+                  alt={`${page}페이지`}
+                  className="w-full block h-auto"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

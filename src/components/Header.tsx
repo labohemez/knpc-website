@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 /* ── 인라인 SVG 아이콘 (HeroIcons 24 outline 기반) ── */
 function MenuIcon({ name, className = "" }: { name: string; className?: string }) {
@@ -81,9 +82,17 @@ const navigation = [
         { name: "금요기도회", desc: "금요일 저녁 기도와 찬양",       href: "/sermons?cat=금요기도회", icon: "star" },
         { name: "특별예배",   desc: "부흥회, 수련회 등 특별 예배",    href: "/sermons?cat=특별예배",   icon: "mic" },
       ]},
-      { label: "더보기", children: [
-        { name: "청년예배", desc: "청년부 예배 말씀과 찬양",  href: "/sermons?cat=청년예배", icon: "people" },
-        { name: "찬양",     desc: "찬양 영상과 음원 모음",   href: "/sermons?cat=찬양",     icon: "mic" },
+      { label: "청년", children: [
+        { name: "청년1부",   desc: "청년1부(다솔) 예배 말씀",  href: "/sermons?cat=청년1부",   icon: "people" },
+        { name: "청년2,3부", desc: "청년2,3부(다니엘,다드림) 예배", href: "/sermons?cat=청년2,3부", icon: "people" },
+      ]},
+      { label: "찬양", children: [
+        { name: "할렐루야",     desc: "할렐루야 찬양대",         href: "/sermons?cat=찬양-할렐루야",   icon: "mic" },
+        { name: "호산나",       desc: "호산나 찬양대",           href: "/sermons?cat=찬양-호산나",     icon: "mic" },
+        { name: "시온",         desc: "시온 찬양대",             href: "/sermons?cat=찬양-시온",       icon: "mic" },
+        { name: "주일찬양",     desc: "주일예배 찬양 영상",       href: "/sermons?cat=찬양-주일예배",   icon: "mic" },
+        { name: "금요찬양",     desc: "금요기도회 찬양 영상",     href: "/sermons?cat=찬양-금요기도회", icon: "mic" },
+        { name: "기타",         desc: "특별 찬양 및 앙상블",     href: "/sermons?cat=찬양-기타",       icon: "mic" },
       ]},
     ],
   },
@@ -146,29 +155,30 @@ const navigation = [
   },
 ];
 
+type Sermon = { title: string; pastor: string; date: string; video_url: string | null };
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const [latestSermon, setLatestSermon] = useState<Sermon | null>(null);
 
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const navRef = useRef<HTMLElement>(null);
 
-  const handleMouseEnter = useCallback((name: string, e: React.MouseEvent<HTMLDivElement>) => {
+  useEffect(() => {
+    supabase
+      .from("sermons")
+      .select("title, pastor, date, video_url")
+      .eq("category", "주일예배")
+      .order("date", { ascending: false })
+      .limit(1)
+      .single()
+      .then(({ data }) => { if (data) setLatestSermon(data as Sermon); });
+  }, []);
+
+  const handleMouseEnter = useCallback((name: string) => {
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
     setActiveMenu(name);
-    const nav = navRef.current;
-    const el = e.currentTarget;
-    if (nav && el) {
-      const navRect = nav.getBoundingClientRect();
-      const elRect = el.getBoundingClientRect();
-      setIndicatorStyle({
-        left: elRect.left - navRect.left + (elRect.width - 32) / 2,
-        width: 32,
-      });
-    }
   }, []);
 
   const handleMouseLeave = useCallback(() => {
@@ -191,41 +201,30 @@ export default function Header() {
                 className="h-[30px] lg:h-[36px] w-auto object-contain" priority unoptimized />
             </Link>
 
-            <nav ref={navRef} className="hidden lg:flex items-center h-full relative">
+            <nav className="hidden lg:flex items-center h-full">
               {navigation.map((item) => (
                 <div
                   key={item.name}
                   className="relative h-full flex items-center"
-                  onMouseEnter={(e) => handleMouseEnter(item.name, e)}
+                  onMouseEnter={() => handleMouseEnter(item.name)}
                 >
                   <Link
                     href={item.href}
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[clamp(0.83rem,0.93vw,1.02rem)] font-semibold tracking-tight transition-all duration-200 ${
+                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[clamp(0.83rem,0.93vw,1.02rem)] font-semibold tracking-tight transition-all duration-200 cursor-pointer ${
                       activeMenu === item.name ? "text-primary bg-primary/5" : "text-[#1d1d1f] hover:text-primary hover:bg-[#f5f5f5]"
                     }`}
                   >
                     {item.name}
-                    <svg
-                      className={`w-3 h-3 transition-transform duration-200 ${
-                        activeMenu === item.name ? "rotate-180 text-primary" : "text-[#aaa]"
-                      }`}
-                      fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"
-                    >
+                    <svg className={`w-3 h-3 transition-transform duration-200 ${activeMenu === item.name ? "rotate-180 text-primary" : "text-[#aaa]"}`}
+                      fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                     </svg>
                   </Link>
                 </div>
               ))}
-              {/* 슬라이딩 인디케이터 바 */}
-              <span
-                className={`absolute bottom-0 h-[3px] bg-primary rounded-full transition-all duration-150 ${
-                  activeMenu ? "opacity-100" : "opacity-0"
-                }`}
-                style={{ left: indicatorStyle.left, width: indicatorStyle.width }}
-              />
             </nav>
 
-            <button type="button" className="lg:hidden p-2 -mr-2 text-[#1d1d1f]"
+            <button type="button" className="lg:hidden p-2 -mr-2 text-[#1d1d1f] cursor-pointer"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"} aria-expanded={mobileMenuOpen}>
               {mobileMenuOpen
@@ -237,7 +236,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Desktop Dropdown — Stacker Style */}
+      {/* Desktop Dropdown — 풀 메가메뉴 */}
       <div
         className={`hidden lg:block absolute left-0 right-0 bg-white border-b border-[#e8e8e8] shadow-[0_8px_30px_rgba(0,0,0,0.08)] -mt-[1px] transition-all duration-300 ${
           activeMenu ? "opacity-100 pointer-events-auto translate-y-0" : "opacity-0 pointer-events-none -translate-y-2"
@@ -245,61 +244,58 @@ export default function Header() {
         onMouseEnter={cancelLeave}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="mx-auto max-w-[1400px] px-5 lg:px-8 py-8">
-          {navigation.map((item) => (
-            <div
-              key={item.name}
-              className={`${activeMenu === item.name ? "grid" : "hidden"} grid-cols-[1fr_auto] gap-16`}
-            >
-              {/* 왼쪽: 메인 항목 (2열 그리드) */}
-              <div>
-                <p className="text-[0.7rem] font-bold text-primary tracking-[0.1em] uppercase mb-5">
-                  {item.groups[0].label}
-                </p>
-                <div className="grid grid-cols-2 gap-x-12 gap-y-1">
-                  {item.groups[0].children.map((child) => (
+        <div className="mx-auto max-w-[1400px] px-5 lg:px-8 py-7 flex gap-6">
+          {/* 전체 메뉴 그리드 */}
+          <div className="flex-1 grid grid-cols-7 gap-4 min-w-0">
+            {navigation.map((item) => (
+              <div key={item.name}>
+                {/* 섹션 헤더 */}
+                <Link
+                  href={item.href}
+                  onClick={() => setActiveMenu(null)}
+                  className="block text-[0.7rem] font-bold text-primary tracking-[0.08em] uppercase mb-3 hover:text-accent transition-colors cursor-pointer"
+                >
+                  {item.name}
+                </Link>
+                <div className="flex flex-col gap-0.5">
+                  {item.groups.flatMap(g => g.children).slice(0, 6).map((child) => (
                     <Link
                       key={child.name}
                       href={child.href}
                       onClick={() => setActiveMenu(null)}
-                      className="relative flex items-start gap-3 group py-2.5"
-                    >
-                      <MenuIcon name={child.icon} className="w-5 h-5 text-primary shrink-0 mt-0.5 group-hover:text-accent transition-colors duration-150" />
-                      <div>
-                        <p className="text-[1rem] font-bold text-[#111] tracking-[-0.02em] group-hover:text-accent transition-colors duration-150">
-                          {child.name}
-                        </p>
-                        <p className="text-[0.75rem] text-[#999] leading-[1.6] mt-1">
-                          {child.desc}
-                        </p>
-                      </div>
-                      <span className="absolute bottom-0 left-0 h-[2px] bg-accent rounded-full w-0 group-hover:w-full transition-[width] duration-150" />
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* 오른쪽: 보조 항목 (텍스트 링크) */}
-              <div className="border-l-2 border-[#e0e0e0] pl-10 min-w-[160px]">
-                <p className="text-[0.7rem] font-bold text-primary tracking-[0.1em] uppercase mb-5">
-                  {item.groups[1].label}
-                </p>
-                <div className="flex flex-col gap-4">
-                  {item.groups[1].children.map((child) => (
-                    <Link
-                      key={child.name}
-                      href={child.href}
-                      onClick={() => setActiveMenu(null)}
-                      className="relative text-[1rem] font-bold text-[#111] hover:text-accent transition-colors duration-150 tracking-[-0.02em] py-2 group block"
+                      className="text-[0.82rem] text-[#444] hover:text-primary font-medium py-1 transition-colors leading-snug cursor-pointer"
                     >
                       {child.name}
-                      <span className="absolute bottom-0 left-0 h-[2px] bg-accent rounded-full w-0 group-hover:w-full transition-[width] duration-150" />
                     </Link>
                   ))}
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* 최신 설교 패널 */}
+          <div className="w-[200px] shrink-0 bg-[#294a3a] rounded-lg p-5 flex flex-col">
+            <span className="text-[0.62rem] font-bold text-[#c69d6c] tracking-[0.12em] uppercase mb-3">최신 설교</span>
+            {latestSermon ? (
+              <>
+                <p className="text-[0.9rem] font-bold text-white leading-snug mb-2 flex-1">
+                  {latestSermon.title}
+                </p>
+                <p className="text-[0.72rem] text-white/50 mb-4">
+                  {latestSermon.pastor} · {latestSermon.date}
+                </p>
+                <Link
+                  href={latestSermon.video_url ? `/sermons` : "/sermons"}
+                  onClick={() => setActiveMenu(null)}
+                  className="flex items-center gap-1.5 text-[0.78rem] text-[#c69d6c] font-semibold hover:text-white transition-colors cursor-pointer"
+                >
+                  <span className="text-[0.7rem]">▶</span> 바로 보기
+                </Link>
+              </>
+            ) : (
+              <p className="text-[0.8rem] text-white/40 flex-1">불러오는 중...</p>
+            )}
+          </div>
         </div>
       </div>
 

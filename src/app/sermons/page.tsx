@@ -23,7 +23,7 @@ const fallbackSermons: Sermon[] = [
 export default async function SermonsPage() {
   let sermons: Sermon[];
   try {
-    sermons = await getSermons(undefined, 200);
+    sermons = await getSermons(undefined, 1500);
     if (sermons.length === 0) sermons = fallbackSermons;
   } catch {
     sermons = fallbackSermons;

@@ -1,6 +1,16 @@
 import { getNews, type NewsItem } from "@/lib/queries";
+import { supabaseAdmin } from "@/lib/supabase";
 import NewsClient from "./NewsClient";
 import type { Metadata } from "next";
+
+export type BulletinItem = {
+  id: string;
+  date: string;
+  title: string;
+  pdf_public_id: string;
+  pdf_url: string;
+  page_count: number;
+};
 
 export const metadata: Metadata = {
   title: "소식",
@@ -31,21 +41,23 @@ const fallbackBulletins: NewsItem[] = [
 ];
 
 export default async function NewsPage() {
-  let notices: NewsItem[], churchNews: NewsItem[], bulletins: NewsItem[];
+  let notices: NewsItem[], churchNews: NewsItem[];
   try {
-    const [n, c, b] = await Promise.all([
-      getNews("공지사항", 20),
-      getNews("교회소식", 20),
-      getNews("교회주보", 20),
-    ]);
+    const [n, c] = await Promise.all([getNews("공지사항", 20), getNews("교회소식", 20)]);
     notices = n.length > 0 ? n : fallbackNotices;
     churchNews = c.length > 0 ? c : fallbackNews;
-    bulletins = b.length > 0 ? b : fallbackBulletins;
   } catch {
     notices = fallbackNotices;
     churchNews = fallbackNews;
-    bulletins = fallbackBulletins;
   }
 
-  return <NewsClient notices={notices} churchNews={churchNews} bulletins={bulletins} />;
+  const { data } = await supabaseAdmin
+    .from("bulletins")
+    .select("id, date, title, pdf_public_id, pdf_url, page_count")
+    .order("date", { ascending: false })
+    .limit(30);
+
+  const bulletinItems: BulletinItem[] = data ?? [];
+
+  return <NewsClient notices={notices} churchNews={churchNews} bulletinItems={bulletinItems} />;
 }
