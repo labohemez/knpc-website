@@ -112,24 +112,24 @@ export default function BulletinNewPage() {
           <h1 className="text-[1.1rem] font-bold text-[#1a1a1a]">주보 등록</h1>
         </div>
 
-        {/* 날짜 */}
-        <div className="mb-5">
-          <label className="block text-[0.78rem] font-medium text-[#555] mb-1.5">날짜</label>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="px-3 py-2 border border-[#e0e0e0] rounded text-[0.85rem] focus:outline-none focus:border-[#294a3a]"
-          />
-        </div>
-
-        {/* PDF 업로드 */}
-        <div className="mb-6">
-          <label className="block text-[0.78rem] font-medium text-[#555] mb-1.5">PDF 파일</label>
-          <label className={`inline-flex items-center gap-2 px-4 py-2.5 border-2 border-dashed border-[#ccc] rounded cursor-pointer hover:border-[#294a3a] transition-colors text-[0.82rem] text-[#555] ${uploading ? "opacity-50 pointer-events-none" : ""}`}>
-            {uploading ? "업로드 중..." : publicId ? `✓ 업로드 완료 (${pageCount}페이지) — 다른 파일 선택` : "PDF 파일 선택"}
-            <input type="file" accept="application/pdf" onChange={handleFileChange} className="hidden" />
-          </label>
+        {/* 날짜 + PDF 업로드 */}
+        <div className="flex items-end gap-4 mb-6">
+          <div>
+            <label className="block text-[0.78rem] font-medium text-[#555] mb-1.5">날짜</label>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="px-3 py-2 border border-[#e0e0e0] rounded text-[0.85rem] focus:outline-none focus:border-[#294a3a]"
+            />
+          </div>
+          <div>
+            <label className="block text-[0.78rem] font-medium text-[#555] mb-1.5">PDF 파일</label>
+            <label className={`inline-flex items-center gap-2 px-4 py-2.5 border-2 border-dashed border-[#ccc] rounded cursor-pointer hover:border-[#294a3a] transition-colors text-[0.82rem] text-[#555] ${uploading ? "opacity-50 pointer-events-none" : ""}`}>
+              {uploading ? "업로드 중..." : publicId ? `✓ 업로드 완료 (${pageCount}페이지) — 다른 파일 선택` : "PDF 파일 선택"}
+              <input type="file" accept="application/pdf" onChange={handleFileChange} className="hidden" />
+            </label>
+          </div>
         </div>
 
         {/* 페이지 썸네일 + 드래그 정렬 */}
@@ -143,7 +143,7 @@ export default function BulletinNewPage() {
             </p>
             <p className="text-[0.72rem] text-[#aaa] mb-4">드래그해서 올바른 순서로 정렬하세요</p>
 
-            <div className="flex gap-4 overflow-x-auto pb-2">
+            <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${pages.length}, 1fr)` }}>
               {pages.map((pageNum, idx) => (
                 <div
                   key={pageNum}
@@ -153,7 +153,7 @@ export default function BulletinNewPage() {
                   onDrop={() => handleDrop(idx)}
                   onDragEnd={handleDragEnd}
                   onDragLeave={() => setDragOverIdx(null)}
-                  className={`flex flex-col items-center gap-2 select-none cursor-grab active:cursor-grabbing transition-transform shrink-0 w-[140px] ${dragOverIdx === idx ? "scale-[1.02]" : ""}`}
+                  className={`flex flex-col items-center gap-2 select-none cursor-grab active:cursor-grabbing transition-transform min-w-0 ${dragOverIdx === idx ? "scale-[1.02]" : ""}`}
                 >
                   <div className={`w-full border-2 rounded overflow-hidden bg-white transition-colors ${dragOverIdx === idx ? "border-[#294a3a]" : "border-[#e0e0e0]"}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
