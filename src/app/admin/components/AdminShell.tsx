@@ -39,6 +39,7 @@ const NAV: NavItem[] = [
       { href: "/admin/sermons?cat=찬양-기타",       label: "기타" },
     ],
   },
+  { href: "/admin/live", label: "LIVE" },
   { href: "/admin/gallery", label: "갤러리" },
 ];
 

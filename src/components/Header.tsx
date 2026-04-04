@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import { useLive } from "./LiveProvider";
 
 /* ── 인라인 SVG 아이콘 (HeroIcons 24 outline 기반) ── */
 function MenuIcon({ name, className = "" }: { name: string; className?: string }) {
@@ -162,6 +163,7 @@ export default function Header() {
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [latestSermon, setLatestSermon] = useState<Sermon | null>(null);
+  const { isLive } = useLive();
 
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -223,6 +225,13 @@ export default function Header() {
                 </div>
               ))}
             </nav>
+
+            {isLive && (
+              <span className="flex items-center gap-1.5 px-2.5 py-1 bg-red-600 rounded text-white text-[0.68rem] font-bold tracking-wider select-none">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                ON AIR
+              </span>
+            )}
 
             <button type="button" className="lg:hidden p-2 -mr-2 text-[#1d1d1f] cursor-pointer"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

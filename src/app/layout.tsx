@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import MobileNav from "@/components/MobileNav";
+import LiveProvider from "@/components/LiveProvider";
+import LiveModal from "@/components/LiveModal";
 import "./globals.css";
 
 import type { Viewport } from "next";
@@ -40,8 +42,11 @@ export default function RootLayout({
         <script src="https://www.youtube.com/iframe_api" async />
       </head>
       <body className="min-h-full flex flex-col pb-16 lg:pb-0">
-        {children}
-        <MobileNav />
+        <LiveProvider>
+          {children}
+          <MobileNav />
+          <LiveModal />
+        </LiveProvider>
       </body>
     </html>
   );
