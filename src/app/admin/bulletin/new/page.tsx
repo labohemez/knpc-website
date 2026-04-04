@@ -6,6 +6,16 @@ import AdminShell from "../../components/AdminShell";
 
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
+// PDF 원본 순서 → 올바른 순서 매핑 (예: 원본 1번째 페이지가 실제 1번, 원본 2번째가 실제 3번...)
+// "1,4,2,6,3,5" 형식으로 입력 — 원본 PDF의 페이지 순서를 의미
+const DEFAULT_PAGE_ORDER = "1,4,2,6,3,5";
+
+function parseOrder(str: string, pageCount: number): number[] {
+  const parsed = str.split(",").map((s) => parseInt(s.trim(), 10)).filter((n) => !isNaN(n) && n >= 1 && n <= pageCount);
+  // 입력값 개수가 맞으면 사용, 아니면 기본순서
+  return parsed.length === pageCount ? parsed : Array.from({ length: pageCount }, (_, i) => i + 1);
+}
+
 function thumbUrl(publicId: string, page: number) {
   return `https://res.cloudinary.com/${cloudName}/image/upload/w_600,pg_${page}/${publicId}.jpg`;
 }
@@ -25,6 +35,7 @@ export default function BulletinNewPage() {
   const [pageCount, setPageCount] = useState(0);
   const [pages, setPages] = useState<number[]>([]);
   const [date, setDate] = useState(today);
+  const [orderInput, setOrderInput] = useState(DEFAULT_PAGE_ORDER);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dragOverIdx, setDragOverIdx] = useState<number | null>(null);
@@ -51,7 +62,7 @@ export default function BulletinNewPage() {
 
       setPublicId(data.public_id);
       setPageCount(data.page_count);
-      setPages(Array.from({ length: data.page_count }, (_, i) => i + 1));
+      setPages(parseOrder(orderInput, data.page_count));
     } catch (e) {
       setError(String(e));
     } finally {
@@ -119,7 +130,7 @@ export default function BulletinNewPage() {
         </div>
 
         {/* 날짜 + PDF 업로드 */}
-        <div className="flex items-end gap-4 mb-6">
+        <div className="flex items-end gap-4 mb-4">
           <div>
             <label className="block text-[0.78rem] font-medium text-[#555] mb-1.5">날짜</label>
             <input
@@ -127,6 +138,16 @@ export default function BulletinNewPage() {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               className="px-3 py-2 border border-[#e0e0e0] rounded text-[0.85rem] focus:outline-none focus:border-[#294a3a]"
+            />
+          </div>
+          <div>
+            <label className="block text-[0.78rem] font-medium text-[#555] mb-1.5">페이지 순서 (원본 기준)</label>
+            <input
+              type="text"
+              value={orderInput}
+              onChange={(e) => setOrderInput(e.target.value)}
+              placeholder="예: 1,4,2,6,3,5"
+              className="px-3 py-2 border border-[#e0e0e0] rounded text-[0.85rem] focus:outline-none focus:border-[#294a3a] w-[160px]"
             />
           </div>
           <div>
