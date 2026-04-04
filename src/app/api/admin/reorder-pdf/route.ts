@@ -53,10 +53,9 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // image: pg_N 썸네일용 (density 300으로 고해상도 렌더링)
+    // image: pg_N 썸네일용
     const imageResult = await upload(pdfBuffer, {
       folder, public_id: `img_${publicId}`, resource_type: "image", overwrite: true,
-      transformation: [{ density: 300 }],
     });
     // raw: 직접 다운로드용 (인증 불필요)
     const rawResult = await upload(pdfBuffer, {
