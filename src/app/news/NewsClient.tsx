@@ -21,7 +21,7 @@ function formatDate(d: string) {
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 function pageUrl(publicId: string, page: number) {
-  return `https://res.cloudinary.com/${cloudName}/image/upload/w_2400,f_png,density_300,pg_${page}/${publicId}`;
+  return `https://res.cloudinary.com/${cloudName}/image/upload/w_3000,f_png,pg_${page}/${publicId}`;
 }
 
 export default function NewsClient({
@@ -118,7 +118,7 @@ export default function NewsClient({
                 ) : (
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 lg:gap-7">
                     {bulletinItems.map((item) => {
-                      const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/w_400,f_png,density_300,pg_1/${item.pdf_public_id}`;
+                      const thumb = `https://res.cloudinary.com/${cloudName}/image/upload/w_400,pg_1/${item.pdf_public_id}.jpg`;
                       return (
                         <button
                           key={item.id}
