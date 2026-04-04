@@ -183,7 +183,7 @@ export default function BulletinEditPage() {
             {newPublicId && pages.length > 0 && (
               <div className="mt-4">
                 <p className="text-[0.72rem] text-[#aaa] mb-3">드래그해서 순서를 맞춰주세요</p>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="flex gap-4 overflow-x-auto pb-2">
                   {pages.map((pageNum, idx) => (
                     <div
                       key={pageNum}
@@ -193,7 +193,7 @@ export default function BulletinEditPage() {
                       onDrop={() => handleDrop(idx)}
                       onDragEnd={handleDragEnd}
                       onDragLeave={() => setDragOverIdx(null)}
-                      className={`flex flex-col items-center gap-2 select-none cursor-grab active:cursor-grabbing transition-transform ${dragOverIdx === idx ? "scale-[1.02]" : ""}`}
+                      className={`flex flex-col items-center gap-2 select-none cursor-grab active:cursor-grabbing transition-transform shrink-0 w-[140px] ${dragOverIdx === idx ? "scale-[1.02]" : ""}`}
                     >
                       <div className={`w-full border-2 rounded overflow-hidden bg-white transition-colors ${dragOverIdx === idx ? "border-[#294a3a]" : "border-[#e0e0e0]"}`}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
