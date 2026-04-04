@@ -140,7 +140,7 @@ export default function BulletinEditPage() {
 
   return (
     <AdminShell>
-        <div className="max-w-[900px]">
+        <div>
           <div className="flex items-center gap-3 mb-6">
             <button onClick={() => router.back()} className="text-[0.8rem] text-[#666] hover:text-[#333] cursor-pointer">← 뒤로</button>
             <h1 className="text-[1.1rem] font-bold text-[#1a1a1a]">{bulletin.title}</h1>

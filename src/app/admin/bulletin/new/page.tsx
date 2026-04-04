@@ -104,7 +104,7 @@ export default function BulletinNewPage() {
 
   return (
     <AdminShell>
-      <div className="max-w-[900px]">
+      <div>
         <div className="flex items-center gap-3 mb-6">
           <button onClick={() => router.back()} className="text-[0.8rem] text-[#666] hover:text-[#333] cursor-pointer">
             ← 뒤로
