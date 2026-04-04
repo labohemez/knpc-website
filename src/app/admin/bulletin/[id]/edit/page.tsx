@@ -155,15 +155,15 @@ export default function BulletinEditPage() {
                 PDF 다운로드 ↗
               </a>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${bulletin.page_count}, 1fr)` }}>
               {Array.from({ length: bulletin.page_count }, (_, i) => i + 1).map((page) => (
-                <div key={page} className="flex flex-col items-center gap-1">
-                  <div className="border border-[#e0e0e0] rounded overflow-hidden bg-white">
+                <div key={page} className="flex flex-col items-center gap-1 min-w-0">
+                  <div className="border border-[#e0e0e0] rounded overflow-hidden bg-white w-full">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={thumbUrl(bulletin.pdf_public_id, page)}
                       alt={`페이지 ${page}`}
-                      className="block w-[110px] h-[155px] object-contain"
+                      className="block w-full aspect-[3/4] object-contain"
                     />
                   </div>
                   <span className="text-[0.68rem] text-[#aaa]">p.{page}</span>
