@@ -42,15 +42,11 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
   const [activeCategory, setActiveCategory] = useState(catParam || "전체");
   const [page, setPage] = useState(1);
   const [modal, setModal] = useState<Sermon | null>(null);
-  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    if (!initialized && catParam) {
-      setActiveCategory(catParam);
-      setPage(1);
-      setInitialized(true);
-    }
-  }, [catParam, initialized]);
+    setActiveCategory(catParam || "전체");
+    setPage(1);
+  }, [catParam]);
 
   const filtered =
     activeCategory === "전체"
