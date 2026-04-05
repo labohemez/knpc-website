@@ -265,7 +265,7 @@ export default function Header() {
                 <Link
                   href={item.href}
                   onClick={() => setActiveMenu(null)}
-                  className="block text-[0.7rem] font-bold text-primary tracking-[0.08em] uppercase mb-3 hover:text-accent transition-colors cursor-pointer"
+                  className="block text-[0.78rem] font-bold text-[#222] tracking-[-0.01em] mb-3 pb-2.5 border-b border-[#294a3a]/20 hover:text-primary transition-colors cursor-pointer"
                 >
                   {item.name}
                 </Link>
