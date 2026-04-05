@@ -136,10 +136,16 @@ const eldersActive: Person[] = [
   { name: "허장민 장로", role: "", email: "", photo: "/images/elders/허장민.jpg" },
   { name: "유현국 장로", role: "", email: "", photo: "/images/elders/유현국.jpg" },
   { name: "박광민 장로", role: "", email: "", photo: "/images/elders/박광민.jpg" },
+];
+
+const eldersMuim: Person[] = [
   { name: "김성은 장로", role: "", email: "", photo: "/images/elders/김성은.jpg" },
   { name: "성일현 장로", role: "", email: "", photo: "/images/elders/성일현.jpg" },
   { name: "박승일 장로", role: "", email: "", photo: "/images/elders/박승일.jpg" },
   { name: "정국창 장로", role: "", email: "", photo: "/images/elders/정국창.jpg" },
+];
+
+const eldersLeave: Person[] = [
   { name: "김지태 장로", role: "", email: "", photo: "/images/elders/김지태.jpg" },
 ];
 
@@ -297,10 +303,22 @@ function StaffContent() {
                     {eldersRetired.map((p) => <PersonCard key={p.name} person={p} />)}
                   </div>
                 </div>
-                <div>
+                <div className="mb-16">
                   <SectionTitle>시무장로</SectionTitle>
                   <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
                     {eldersActive.map((p) => <PersonCard key={p.name} person={p} />)}
+                  </div>
+                </div>
+                <div className="mb-16">
+                  <SectionTitle>무임장로</SectionTitle>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {eldersMuim.map((p) => <PersonCard key={p.name} person={p} />)}
+                  </div>
+                </div>
+                <div>
+                  <SectionTitle>휴직장로</SectionTitle>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {eldersLeave.map((p) => <PersonCard key={p.name} person={p} />)}
                   </div>
                 </div>
               </>
