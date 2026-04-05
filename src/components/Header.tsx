@@ -45,16 +45,18 @@ function MenuIcon({ name, className = "" }: { name: string; className?: string }
 const navigation = [
   {
     name: "교회소개",
-    href: "/about",
+    href: "/about/greeting",
     groups: [
-      { label: "소개", children: [
-        { name: "담임목사 인사말", desc: "목사님의 환영 인사를 전합니다",   href: "/about#greeting", icon: "person" },
-        { name: "교회 역사",      desc: "강남교회의 발자취를 소개합니다",   href: "/about#history",  icon: "clock" },
-        { name: "비전과 사명",    desc: "하나님 나라를 이 땅에 세우는 비전", href: "/about#vision",   icon: "star" },
+      { label: "교회소개", children: [
+        { name: "환영인사",     desc: "담임목사님의 환영 인사말",           href: "/about/greeting",  icon: "person" },
+        { name: "교회비전",     desc: "강남교회의 5대 비전",               href: "/about/vision",    icon: "star" },
+        { name: "교회연혁",     desc: "1951년 창립부터의 발자취",           href: "/about/history",   icon: "clock" },
+        { name: "섬기는사람들", desc: "담임목사와 교역자 소개",             href: "/about/staff",     icon: "people" },
       ]},
       { label: "안내", children: [
-        { name: "예배 안내",      desc: "주일·수요·새벽 예배 시간과 장소",  href: "/about#worship",  icon: "clock" },
-        { name: "오시는 길",      desc: "교회 위치와 교통편 안내",          href: "/about#location", icon: "mapPin" },
+        { name: "예배시간",     desc: "주일·수요·새벽 예배 시간 안내",      href: "/about/worship",   icon: "clock" },
+        { name: "헌금안내",     desc: "온라인 헌금 계좌 및 방법 안내",      href: "/about/donation",  icon: "heart" },
+        { name: "오시는길",     desc: "교회 위치와 교통편 안내",            href: "/about/location",  icon: "mapPin" },
       ]},
     ],
   },
