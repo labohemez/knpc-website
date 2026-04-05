@@ -395,7 +395,7 @@ export default function HeroSlider({ sermon }: { sermon?: Sermon | null }) {
               <span className="inline-block px-3 py-1 bg-accent text-white font-semibold tracking-[-0.02em] mb-4" style={{ fontSize: "12px" }}>
                 {sermonInfo.category}
               </span>
-              <h2 className="font-bold text-white tracking-[-0.04em] leading-tight" style={{ fontSize: "clamp(28px, 2.5vw, 42px)" }}>
+              <h2 className="font-bold text-white tracking-[-0.04em] leading-tight truncate" style={{ fontSize: "clamp(28px, 2.5vw, 42px)" }}>
                 {sermonInfo.title}
               </h2>
               {(sermonInfo.scripture || sermonInfo.pastor) && (
