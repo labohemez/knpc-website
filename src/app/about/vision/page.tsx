@@ -36,7 +36,7 @@ export default function VisionPage() {
             src="https://cdn.imweb.me/thumbnail/20241206/61bf958b25a70.jpg"
             alt="강남교회 5대 비전"
             fill
-            className="object-cover object-center"
+            className="object-cover object-top"
             priority
             unoptimized
           />
