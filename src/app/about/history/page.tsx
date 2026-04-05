@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SubNav from "../_components/SubNav";
@@ -15,23 +14,6 @@ export default function HistoryPage() {
     <>
       <Header />
       <main className="flex-1 bg-white flex flex-col">
-        {/* 히어로 */}
-        <section className="relative h-[240px] lg:h-[320px] flex items-end pb-8 lg:pb-12">
-          <Image
-            src="https://cdn.imweb.me/thumbnail/20240419/2f79fc0e8fe29.jpg"
-            alt="교회소개"
-            fill
-            className="object-cover"
-            priority
-            unoptimized
-          />
-          <div className="absolute inset-0 bg-[#294a3a]/75" />
-          <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full">
-            <p className="text-[#c69d6c] text-[0.72rem] font-semibold tracking-[0.2em] uppercase mb-2">About Us</p>
-            <h1 className="text-[2rem] lg:text-[2.8rem] font-bold text-white tracking-[-0.04em] leading-[1.15]">교회소개</h1>
-          </div>
-        </section>
-
         <SubNav />
 
         <section className="py-[5rem] lg:py-[7rem] bg-white">
