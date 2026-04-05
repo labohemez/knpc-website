@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SubNav from "../_components/SubNav";
@@ -175,8 +176,15 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 const tabs = ["교역자", "장로", "직원"] as const;
 type Tab = (typeof tabs)[number];
 
-export default function StaffPage() {
-  const [activeTab, setActiveTab] = useState<Tab>("교역자");
+function StaffContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const tabParam = searchParams.get("tab") as Tab | null;
+  const activeTab: Tab = tabs.includes(tabParam as Tab) ? (tabParam as Tab) : "교역자";
+
+  function handleTabChange(tab: Tab) {
+    router.replace(`?tab=${encodeURIComponent(tab)}`, { scroll: false });
+  }
 
   return (
     <>
@@ -202,7 +210,7 @@ export default function StaffPage() {
               {tabs.map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => handleTabChange(tab)}
                   className={`px-5 py-2 text-[0.88rem] font-medium tracking-[-0.02em] rounded-full border transition-colors duration-200 cursor-pointer ${
                     activeTab === tab
                       ? "border-[#294a3a] text-[#294a3a] bg-white"
@@ -307,5 +315,13 @@ export default function StaffPage() {
       </main>
       <Footer />
     </>
+  );
+}
+
+export default function StaffPage() {
+  return (
+    <Suspense>
+      <StaffContent />
+    </Suspense>
   );
 }
