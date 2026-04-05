@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 import ScrollReveal from "@/components/ScrollReveal";
 import type { Metadata } from "next";
 
@@ -57,25 +58,10 @@ export default function TrainingPage() {
       <Header />
 
       <main className="flex-1 bg-white flex flex-col gap-3">
-        {/* ── 히어로 ── */}
-        <section className="relative h-[350px] lg:h-[470px] flex items-end pb-10 lg:pb-14">
-          <Image
-            src="/images/gallery-4.jpg"
-            alt="강남교회 훈련"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-primary-dark/80" />
-          <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full">
-            <p className="text-accent text-[0.72rem] font-semibold tracking-[0.2em] uppercase mb-2">
-              Training
-            </p>
-            <h1 className="text-[2.2rem] lg:text-[3rem] font-bold text-white tracking-[-0.04em] leading-[1.15]">
-              훈련
-            </h1>
-          </div>
-        </section>
+        <PageHero
+          breadcrumbs={[{ name: "홈", href: "/" }, { name: "훈련" }]}
+          title="훈련"
+        />
 
         {/* ── 소개 문구 ── */}
         <section className="py-[5rem] lg:py-[6rem] bg-white">

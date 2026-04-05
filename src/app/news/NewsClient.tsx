@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 import ScrollReveal from "@/components/ScrollReveal";
 import type { NewsItem } from "@/lib/queries";
 import type { BulletinItem } from "./page";
@@ -49,15 +50,10 @@ export default function NewsClient({
       <Header />
 
       <main className="flex-1 bg-white flex flex-col gap-3">
-        {/* ── 히어로 ── */}
-        <section className="relative h-[350px] lg:h-[470px] flex items-end pb-10 lg:pb-14">
-          <Image src="/images/gallery-4.jpg" alt="교회 소식" fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-primary-dark/80" />
-          <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full">
-            <p className="text-accent text-[0.72rem] font-semibold tracking-[0.2em] uppercase mb-2">News</p>
-            <h1 className="text-[2.2rem] lg:text-[3rem] font-bold text-white tracking-[-0.04em] leading-[1.15]">소식</h1>
-          </div>
-        </section>
+        <PageHero
+          breadcrumbs={[{ name: "홈", href: "/" }, { name: "커뮤니티", href: "/board" }, { name: "소식" }]}
+          title="소식"
+        />
 
         {/* ── 탭 + 콘텐츠 ── */}
         <section className="py-[4rem] lg:py-[5rem] bg-white">

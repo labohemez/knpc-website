@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 import ScrollReveal from "@/components/ScrollReveal";
 import { type Sermon } from "@/lib/queries";
 
@@ -62,20 +63,11 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
 
       <main className="flex-1 flex flex-col">
 
-        {/* ── 히어로 배너 ── */}
-        <section className="relative h-[200px] lg:h-[260px] flex items-end overflow-hidden bg-[#294a3a]">
-          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 21px)" }} />
-          {/* 장식 원 */}
-          <div className="absolute right-[-60px] top-[-60px] w-[320px] h-[320px] rounded-full opacity-[0.06]" style={{ background: "radial-gradient(circle, #c69d6c, transparent 70%)" }} />
-          <div className="absolute right-[120px] bottom-[-80px] w-[200px] h-[200px] rounded-full opacity-[0.05]" style={{ background: "radial-gradient(circle, #ffffff, transparent 70%)" }} />
-          <div className="relative mx-auto max-w-[1400px] px-5 lg:px-8 w-full pb-4 lg:pb-5">
-            <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-[#c69d6c] uppercase mb-2">Worship</p>
-            <h1 className="text-[2rem] lg:text-[2.8rem] font-bold text-white tracking-[-0.02em] leading-[1.1]">
-              말씀과 찬양
-            </h1>
-            <p className="text-white/50 text-[0.95rem] mt-2 tracking-[-0.01em] font-medium">{activeCategory}</p>
-          </div>
-        </section>
+        <PageHero
+          breadcrumbs={[{ name: "홈", href: "/" }, { name: "말씀과찬양" }]}
+          title="말씀과 찬양"
+          subtitle={activeCategory}
+        />
 
         {/* ── 최신 설교 ── */}
         {featured && (
