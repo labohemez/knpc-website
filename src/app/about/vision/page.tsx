@@ -30,7 +30,7 @@ export default function VisionPage() {
         <SubNav />
 
         {/* ── 메인 히어로: 목사님 배경 + 5대 비전 버튼 ── */}
-        <section className="relative flex flex-col items-center justify-center min-h-screen text-center">
+        <section className="relative flex flex-col items-center justify-end min-h-screen text-center pb-16 lg:pb-24">
           <Image
             src="https://cdn.imweb.me/thumbnail/20241206/61bf958b25a70.jpg"
             alt="강남교회 5대 비전"
