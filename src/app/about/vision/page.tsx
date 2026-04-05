@@ -30,7 +30,7 @@ export default function VisionPage() {
         <SubNav />
 
         {/* ── 메인 히어로: 목사님 배경 + 5대 비전 버튼 ── */}
-        <section className="relative flex flex-col items-center justify-center min-h-[480px] lg:min-h-[600px] text-center">
+        <section className="relative flex flex-col items-center justify-center min-h-screen text-center">
           <Image
             src="https://cdn.imweb.me/thumbnail/20241206/61bf958b25a70.jpg"
             alt="강남교회 5대 비전"
@@ -39,27 +39,28 @@ export default function VisionPage() {
             priority
             unoptimized
           />
-          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-black/35" />
 
-          <div className="relative px-5 lg:px-8 max-w-[860px] mx-auto w-full">
-            <h2 className="text-[2rem] lg:text-[2.8rem] font-bold text-white tracking-[-0.03em] leading-[1.2] mb-6">
+          <div className="relative px-5 lg:px-8 max-w-[1000px] mx-auto w-full">
+            <h2 className="text-[1.8rem] lg:text-[2.4rem] font-bold text-white tracking-[-0.03em] leading-[1.2] mb-4">
               강남교회 5대 비전
             </h2>
-            <p className="text-white/80 text-[0.88rem] lg:text-[1rem] leading-[1.9] tracking-[-0.01em]">
-              "예수께서 모든 도시와 마을에 두루 다니사 그들의 회당에서 가르치시며<br className="hidden lg:block" />
-              전국 복음을 전파하시며 모든 병과 모든 약한 것을 고치시니라"
+            {/* 구분선 */}
+            <div className="w-full h-px bg-white/30 mb-6" />
+
+            <p className="text-white/80 text-[0.82rem] lg:text-[0.92rem] leading-[1.8] tracking-[-0.01em]">
+              &ldquo;예수께서 모든 도시와 마을에 두루 다니사 그들의 회당에서 가르치시며 전국 복음을 전파하시며 모든 병과 모든 약한 것을 고치시니라&rdquo;
             </p>
-            <p className="text-[#c69d6c] text-[0.82rem] mt-1 mb-10">(마태복음 9:35)</p>
+            <p className="text-[#c69d6c] text-[0.8rem] mt-1 mb-10">(마태복음 9:35)</p>
 
             {/* 5대 비전 버튼 */}
-            <div className="flex flex-wrap justify-center gap-2 lg:gap-3">
+            <div className="flex flex-wrap justify-center gap-3 lg:gap-4">
               {visions.map((v, i) => (
                 <div
                   key={i}
-                  className="bg-black/40 border border-white/25 text-white px-4 py-3 lg:px-5 lg:py-4 text-[0.8rem] lg:text-[0.88rem] font-semibold text-center min-w-[110px] lg:min-w-[130px] whitespace-pre-line leading-[1.4] backdrop-blur-sm"
+                  className="bg-[#c69d6c]/80 text-white px-5 py-3 lg:px-6 lg:py-3.5 text-[0.82rem] lg:text-[0.88rem] font-semibold text-center rounded whitespace-pre-line leading-[1.5] backdrop-blur-sm"
                 >
-                  <span className="text-[#c69d6c] block text-[0.7rem] mb-0.5">{i + 1}.</span>
-                  {v}
+                  {i + 1}. {v}
                 </div>
               ))}
             </div>
