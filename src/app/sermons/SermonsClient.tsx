@@ -86,9 +86,9 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
 
         {/* ── SubNav ── */}
         <div className="sticky top-0 z-20 bg-white border-b border-[#eee] shadow-sm">
-          <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
-            <div className="flex overflow-x-auto scrollbar-hide">
-              {/* 설교 그룹 */}
+          <div className="mx-auto max-w-[1400px] px-5 lg:px-8 flex items-stretch">
+            {/* 설교 카테고리 (스크롤 가능) */}
+            <div className="flex overflow-x-auto scrollbar-hide flex-1 min-w-0">
               {sermonCategories.map((cat) => (
                 <button
                   key={cat}
@@ -102,50 +102,52 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
                   {cat}
                 </button>
               ))}
-              {/* 구분선 */}
-              <div className="shrink-0 flex items-center px-2">
-                <div className="w-px h-4 bg-[#ddd]" />
-              </div>
-              {/* 찬양 드롭다운 탭 */}
-              <div ref={praiseRef} className="relative shrink-0">
-                <button
-                  onClick={() => setPraiseOpen((o) => !o)}
-                  className={`flex items-center gap-1 px-4 lg:px-5 py-4 text-[0.86rem] border-b-2 transition-colors whitespace-nowrap cursor-pointer ${
-                    praiseCategories.includes(activeCategory)
-                      ? "border-[#c69d6c] text-[#c69d6c] font-semibold"
-                      : "border-transparent text-[#666] hover:text-[#c69d6c]"
-                  }`}
-                >
-                  {praiseCategories.includes(activeCategory)
-                    ? activeCategory.replace("찬양-", "")
-                    : "찬양"}
-                  <svg className={`w-3 h-3 transition-transform duration-200 ${praiseOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </button>
-                {praiseOpen && (
-                  <div className="absolute top-full left-0 mt-0 bg-white border border-[#eee] shadow-lg z-30 min-w-[120px]">
-                    {praiseCategories.map((cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => {
-                          setActiveCategory(cat);
-                          setPage(1);
-                          setPraiseOpen(false);
-                          router.replace(`?cat=${encodeURIComponent(cat)}`, { scroll: false });
-                        }}
-                        className={`block w-full text-left px-4 py-2.5 text-[0.84rem] whitespace-nowrap transition-colors cursor-pointer ${
-                          activeCategory === cat
-                            ? "bg-[#f5f0e8] text-[#c69d6c] font-semibold"
-                            : "text-[#555] hover:bg-[#faf8f5] hover:text-[#c69d6c]"
-                        }`}
-                      >
-                        {cat.replace("찬양-", "")}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+            </div>
+
+            {/* 구분선 */}
+            <div className="flex items-center px-2 shrink-0">
+              <div className="w-px h-4 bg-[#ddd]" />
+            </div>
+
+            {/* 찬양 드롭다운 (스크롤 영역 밖 — overflow 클리핑 없음) */}
+            <div ref={praiseRef} className="relative shrink-0">
+              <button
+                onClick={() => setPraiseOpen((o) => !o)}
+                className={`flex items-center gap-1 px-4 lg:px-5 py-4 text-[0.86rem] border-b-2 transition-colors whitespace-nowrap cursor-pointer h-full ${
+                  praiseCategories.includes(activeCategory)
+                    ? "border-[#c69d6c] text-[#c69d6c] font-semibold"
+                    : "border-transparent text-[#666] hover:text-[#c69d6c]"
+                }`}
+              >
+                {praiseCategories.includes(activeCategory)
+                  ? activeCategory.replace("찬양-", "")
+                  : "찬양"}
+                <svg className={`w-3 h-3 transition-transform duration-200 ${praiseOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              {praiseOpen && (
+                <div className="absolute top-full right-0 bg-white border border-[#eee] shadow-lg z-30 min-w-[120px]">
+                  {praiseCategories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setActiveCategory(cat);
+                        setPage(1);
+                        setPraiseOpen(false);
+                        router.replace(`?cat=${encodeURIComponent(cat)}`, { scroll: false });
+                      }}
+                      className={`block w-full text-left px-4 py-2.5 text-[0.84rem] whitespace-nowrap transition-colors cursor-pointer ${
+                        activeCategory === cat
+                          ? "bg-[#f5f0e8] text-[#c69d6c] font-semibold"
+                          : "text-[#555] hover:bg-[#faf8f5] hover:text-[#c69d6c]"
+                      }`}
+                    >
+                      {cat.replace("찬양-", "")}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
