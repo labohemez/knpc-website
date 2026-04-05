@@ -66,12 +66,15 @@ const internEvangelists: Person[] = [
   { name: "주찬영 전도사", role: "교육부 공동사역", email: "jooyona12@naver.com", photo: "/images/staff/ju-chan-yeong.jpg" },
 ];
 
-const elders: Person[] = [
+const eldersEmeritusKorea: Person[] = [
   { name: "김도식 장로", role: "", email: "", photo: "/images/elders/김도식.jpg" },
   { name: "임석규 장로", role: "", email: "", photo: "/images/elders/임석규.jpg" },
   { name: "심현식 장로", role: "", email: "", photo: "/images/elders/심현식.jpg" },
   { name: "남차원 장로", role: "", email: "", photo: "/images/elders/남차원.jpg" },
   { name: "안성철 장로", role: "", email: "", photo: "/images/elders/안성철.jpg" },
+];
+
+const eldersRetired: Person[] = [
   { name: "이균상 장로", role: "", email: "", photo: "/images/elders/이균상.jpg" },
   { name: "박기영 장로", role: "", email: "", photo: "/images/elders/박기영.jpg" },
   { name: "김증석 장로", role: "", email: "", photo: "/images/elders/김증석.jpg" },
@@ -103,6 +106,9 @@ const elders: Person[] = [
   { name: "이기석 장로", role: "", email: "", photo: "/images/elders/이기석.jpg" },
   { name: "서우덕 장로", role: "", email: "", photo: "/images/elders/서우덕.jpg" },
   { name: "박석주 장로", role: "", email: "", photo: "/images/elders/박석주.jpg" },
+];
+
+const eldersActive: Person[] = [
   { name: "유병선 장로", role: "", email: "", photo: "/images/elders/유병선.jpg" },
   { name: "노학주 장로", role: "", email: "", photo: "/images/elders/노학주.jpg" },
   { name: "유창수 장로", role: "", email: "", photo: "/images/elders/유창수.jpg" },
@@ -270,12 +276,26 @@ export default function StaffPage() {
 
             {/* 장로 탭 */}
             {activeTab === "장로" && (
-              <div>
-                <SectionTitle>장로</SectionTitle>
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
-                  {elders.map((p) => <PersonCard key={p.name} person={p} />)}
+              <>
+                <div className="mb-16">
+                  <SectionTitle>원로장로</SectionTitle>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {eldersEmeritusKorea.map((p) => <PersonCard key={p.name} person={p} />)}
+                  </div>
                 </div>
-              </div>
+                <div className="mb-16">
+                  <SectionTitle>은퇴장로</SectionTitle>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {eldersRetired.map((p) => <PersonCard key={p.name} person={p} />)}
+                  </div>
+                </div>
+                <div>
+                  <SectionTitle>시무장로</SectionTitle>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {eldersActive.map((p) => <PersonCard key={p.name} person={p} />)}
+                  </div>
+                </div>
+              </>
             )}
 
             {/* 직원 탭 */}
