@@ -269,25 +269,18 @@ export default function Header() {
                 >
                   {item.name}
                 </Link>
-                <div className="flex flex-col gap-0">
-                  {item.groups.map((group, gi) => (
-                    <div key={group.label} className={gi > 0 ? "mt-2.5" : ""}>
-                      {item.groups.length > 1 && (
-                        <p className="text-[0.67rem] font-bold text-[#bbb] tracking-[0.08em] uppercase mb-1">{group.label}</p>
-                      )}
-                      {group.children.map((child) => (
-                        <Link
-                          key={child.name}
-                          href={child.href}
-                          onClick={() => setActiveMenu(null)}
-                          className="group inline-block text-[0.82rem] text-[#444] hover:text-primary font-medium py-0.5 transition-colors leading-snug cursor-pointer"
-                        >
-                          <span className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 group-hover:after:w-full">
-                            {child.name}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
+                <div className="flex flex-col gap-0.5">
+                  {item.groups.flatMap(g => g.children).map((child) => (
+                    <Link
+                      key={child.name}
+                      href={child.href}
+                      onClick={() => setActiveMenu(null)}
+                      className="group inline-block text-[0.82rem] text-[#444] hover:text-primary font-medium py-1 transition-colors leading-snug cursor-pointer"
+                    >
+                      <span className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 group-hover:after:w-full">
+                        {child.name}
+                      </span>
+                    </Link>
                   ))}
                 </div>
               </div>
