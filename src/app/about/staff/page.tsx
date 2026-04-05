@@ -30,8 +30,14 @@ const pastors: Person[] = [
   { name: "김기락 목사", role: "3,4마을/사랑방 교안/전도폭발(장년)/피스메이커(정)", email: "stand-up01@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20251207/05969e3d61cab.jpg" },
   { name: "이정현 목사", role: "다니엘(청년2부)/세계선교위원회(정)", email: "jinsimura@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251210/3bcd56516be68.jpg" },
   { name: "김응열 목사", role: "7,8마을/소망부, 경로대학, 성경파노라마(정)", email: "powchist@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251230/ad2d6bd441975.jpg" },
-  { name: "김광열 목사", role: "총신대학교 신학대학원 교수 (협동목사)", email: "kykim@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20240602/c4f025d61ae40.jpg" },
 ];
+
+const associatePastor: Person = {
+  name: "김광열 목사",
+  role: "총신대학교 신학대학원 교수",
+  email: "kykim@hanmail.net",
+  photo: "https://cdn.imweb.me/thumbnail/20240602/c4f025d61ae40.jpg",
+};
 
 const evangelists: Person[] = [
   { name: "이대성 강도사", role: "중등부/세계선교위원회(부)/성경통신", email: "eotjd1097@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251230/5dfc586508acd.jpg" },
@@ -104,9 +110,19 @@ export default function StaffPage() {
 
             {/* 목사 */}
             <div className="mb-16">
-              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">목사 / 협동목사</h3>
+              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">목사</h3>
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
                 {pastors.map((p) => <PersonCard key={p.email} person={p} />)}
+              </div>
+            </div>
+
+            {/* 협동목사 */}
+            <div className="mb-16">
+              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">협동목사</h3>
+              <div className="flex justify-start">
+                <div className="w-[180px]">
+                  <PersonCard person={associatePastor} />
+                </div>
               </div>
             </div>
 
