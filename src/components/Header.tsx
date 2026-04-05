@@ -163,7 +163,7 @@ export default function Header() {
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [latestSermon, setLatestSermon] = useState<Sermon | null>(null);
-  const { isLive } = useLive();
+  const { isLive, liveUrl } = useLive();
 
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -226,11 +226,12 @@ export default function Header() {
               ))}
             </nav>
 
-            {isLive && (
-              <span className="flex items-center gap-1.5 px-2.5 py-1 bg-red-600 rounded text-white text-[0.68rem] font-bold tracking-wider select-none">
+            {isLive && liveUrl && (
+              <a href={liveUrl.trim().split(/\s/)[0]} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-2.5 py-1 bg-red-600 hover:bg-red-700 rounded text-white text-[0.68rem] font-bold tracking-wider transition-colors">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                 ON AIR
-              </span>
+              </a>
             )}
 
             <button type="button" className="lg:hidden p-2 -mr-2 text-[#1d1d1f] cursor-pointer"

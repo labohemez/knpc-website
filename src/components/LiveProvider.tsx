@@ -13,10 +13,11 @@ type LiveSchedule = {
 type LiveContextValue = {
   live: LiveSchedule | null;
   isLive: boolean;
+  liveUrl: string | null;
   dismiss: () => void;
 };
 
-const LiveContext = createContext<LiveContextValue>({ live: null, isLive: false, dismiss: () => {} });
+const LiveContext = createContext<LiveContextValue>({ live: null, isLive: false, liveUrl: null, dismiss: () => {} });
 
 export function useLive() {
   return useContext(LiveContext);
@@ -68,7 +69,7 @@ export default function LiveProvider({ children }: { children: React.ReactNode }
   const modalLive = live && !dismissed && !sessionStorage.getItem(`live_dismissed_${live?.id}`) ? live : null;
 
   return (
-    <LiveContext.Provider value={{ live: modalLive, isLive: !!live, dismiss }}>
+    <LiveContext.Provider value={{ live: modalLive, isLive: !!live, liveUrl: live?.youtube_url ?? null, dismiss }}>
       {children}
     </LiveContext.Provider>
   );

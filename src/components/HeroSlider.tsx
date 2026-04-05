@@ -116,7 +116,7 @@ export default function HeroSlider() {
           if (scrollVolumeFadeRef.current) clearInterval(scrollVolumeFadeRef.current);
           scrollVolumeFadeRef.current = setInterval(() => {
             step++;
-            if (!playerRef.current) return;
+            if (!playerRef.current || typeof playerRef.current.setVolume !== 'function') return;
             const vol = Math.round(startVol * (1 - step / totalSteps));
             playerRef.current.setVolume(Math.max(0, vol));
             if (step >= totalSteps) {
@@ -143,7 +143,7 @@ export default function HeroSlider() {
           const totalSteps = 10;
           scrollVolumeFadeRef.current = setInterval(() => {
             step++;
-            if (!playerRef.current) return;
+            if (!playerRef.current || typeof playerRef.current.setVolume !== 'function') return;
             const vol = Math.round(targetVol * (step / totalSteps));
             playerRef.current.setVolume(vol);
             if (step >= totalSteps) {
@@ -235,9 +235,9 @@ export default function HeroSlider() {
       // 볼륨 페이드아웃 (구간 끝 VOLUME_FADE_SECS초 전부터)
       if (!mutedRef.current && remaining <= VOLUME_FADE_SECS && !fadingVolume.current) {
         fadingVolume.current = true;
-        savedVolume.current = playerRef.current.getVolume() || 100;
+        savedVolume.current = (typeof playerRef.current.getVolume === 'function' ? playerRef.current.getVolume() : 0) || 100;
       }
-      if (fadingVolume.current) {
+      if (fadingVolume.current && typeof playerRef.current.setVolume === 'function') {
         const ratio = Math.max(0, remaining / VOLUME_FADE_SECS);
         playerRef.current.setVolume(Math.round(savedVolume.current * ratio));
       }
@@ -245,7 +245,7 @@ export default function HeroSlider() {
       if (remaining <= 0.3) {
         // 즉시 정지 + 음소거
         transitioning.current = true;
-        playerRef.current.setVolume(0);
+        if (typeof playerRef.current.setVolume === 'function') playerRef.current.setVolume(0);
         playerRef.current.pauseVideo();
         fadingVolume.current = false;
         setShowVideo(false);
@@ -460,22 +460,6 @@ export default function HeroSlider() {
         </button>
       </div>
 
-      {/* 로딩 오버레이 — 영상 준비될 때까지 포스터 이미지 표시 */}
-      {!pageReady && (
-        <div className="absolute inset-0 z-[10]">
-          <Image
-            src={backgroundVideo.poster}
-            alt="강남교회"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/40" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-          </div>
-        </div>
-      )}
     </section>
   );
 }

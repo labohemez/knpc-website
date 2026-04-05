@@ -2,17 +2,31 @@
 
 import { useLive } from "./LiveProvider";
 
-function getYoutubeEmbedUrl(url: string) {
+function getYoutubeEmbedUrl(rawUrl: string) {
   try {
-    const u = new URL(url);
-    let videoId = "";
+    // URL 앞부분만 사용 (공백 이후 쓰레기 데이터 제거)
+    const clean = rawUrl.trim().split(/\s/)[0];
+    const u = new URL(clean);
+
+    // youtu.be/VIDEO_ID
     if (u.hostname.includes("youtu.be")) {
-      videoId = u.pathname.slice(1);
-    } else {
-      videoId = u.searchParams.get("v") || "";
+      const videoId = u.pathname.slice(1);
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     }
-    if (!videoId) return null;
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+
+    // /watch?v=VIDEO_ID
+    const v = u.searchParams.get("v");
+    if (v) return `https://www.youtube.com/embed/${v}?autoplay=1&rel=0`;
+
+    // /live/VIDEO_ID
+    const liveMatch = u.pathname.match(/\/live\/([^/]+)/);
+    if (liveMatch) return `https://www.youtube.com/embed/${liveMatch[1]}?autoplay=1&rel=0`;
+
+    // /channel/CHANNEL_ID/live  또는  /channel/CHANNEL_ID
+    const channelMatch = u.pathname.match(/\/channel\/([^/]+)/);
+    if (channelMatch) return `https://www.youtube.com/embed/live_stream?channel=${channelMatch[1]}&autoplay=1&rel=0`;
+
+    return null;
   } catch {
     return null;
   }
