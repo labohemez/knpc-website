@@ -277,7 +277,7 @@ export default function Header() {
                       onClick={() => setActiveMenu(null)}
                       className="group inline-block text-[0.82rem] text-[#444] hover:text-primary font-medium py-1 transition-colors leading-snug cursor-pointer"
                     >
-                      <span className="relative after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-0 after:bg-current after:transition-all after:duration-300 group-hover:after:w-full">
+                      <span className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 group-hover:after:w-full">
                         {child.name}
                       </span>
                     </Link>
