@@ -72,6 +72,46 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
           title="말씀과 찬양"
         />
 
+        {/* ── SubNav ── */}
+        <div className="sticky top-0 z-20 bg-white border-b border-[#eee] shadow-sm">
+          <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
+            <div className="flex overflow-x-auto scrollbar-hide">
+              {/* 설교 그룹 */}
+              {sermonCategories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => { setActiveCategory(cat); setPage(1); router.replace(`?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
+                  className={`shrink-0 px-4 lg:px-5 py-4 text-[0.86rem] border-b-2 transition-colors whitespace-nowrap cursor-pointer ${
+                    activeCategory === cat
+                      ? "border-[#294a3a] text-[#294a3a] font-semibold"
+                      : "border-transparent text-[#666] hover:text-[#294a3a]"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+              {/* 구분선 */}
+              <div className="shrink-0 flex items-center px-2">
+                <div className="w-px h-4 bg-[#ddd]" />
+              </div>
+              {/* 찬양 그룹 */}
+              {praiseCategories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => { setActiveCategory(cat); setPage(1); router.replace(`?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
+                  className={`shrink-0 px-4 lg:px-5 py-4 text-[0.86rem] border-b-2 transition-colors whitespace-nowrap cursor-pointer ${
+                    activeCategory === cat
+                      ? "border-[#c69d6c] text-[#c69d6c] font-semibold"
+                      : "border-transparent text-[#666] hover:text-[#c69d6c]"
+                  }`}
+                >
+                  {cat.replace("찬양-", "")}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* ── 최신 설교 ── */}
         {featured && (
           <section className="bg-[#faf8f5] py-8 lg:py-12">
@@ -148,43 +188,6 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
         <section className="flex-1 bg-[#faf8f5] py-8 lg:py-12">
           <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
 
-            {/* 카테고리 필터 */}
-            <ScrollReveal>
-              <div className="mb-8 lg:mb-10 space-y-3">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[0.72rem] font-bold text-white bg-[#294a3a] px-2.5 py-1 rounded tracking-[0.05em]">설교</span>
-                  {sermonCategories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => { setActiveCategory(cat); setPage(1); router.replace(`?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
-                      className={`px-4 py-1.5 text-[0.8rem] font-medium tracking-[-0.01em] rounded-full cursor-pointer transition-all duration-200 ${
-                        activeCategory === cat
-                          ? "bg-[#294a3a] text-white"
-                          : "bg-white border border-[#e0dcd6] text-[#888] hover:border-[#294a3a] hover:text-[#294a3a]"
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[0.72rem] font-bold text-white bg-[#c69d6c] px-2.5 py-1 rounded tracking-[0.05em]">찬양</span>
-                  {praiseCategories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => { setActiveCategory(cat); setPage(1); router.replace(`?cat=${encodeURIComponent(cat)}`, { scroll: false }); }}
-                      className={`px-4 py-1.5 text-[0.8rem] font-medium tracking-[-0.01em] rounded-full cursor-pointer transition-all duration-200 ${
-                        activeCategory === cat
-                          ? "bg-[#c69d6c] text-white"
-                          : "bg-white border border-[#e0dcd6] text-[#888] hover:border-[#c69d6c] hover:text-[#c69d6c]"
-                      }`}
-                    >
-                      {cat.replace("찬양-", "")}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
 
             {/* 카드 그리드 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
