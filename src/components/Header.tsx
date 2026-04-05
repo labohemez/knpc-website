@@ -214,15 +214,11 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`group flex items-center gap-1.5 px-4 py-1.5 text-[clamp(0.83rem,0.93vw,1.02rem)] font-semibold tracking-tight transition-colors duration-200 cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-4 py-1.5 text-[clamp(0.83rem,0.93vw,1.02rem)] font-semibold tracking-tight transition-colors duration-200 cursor-pointer ${
                       activeMenu === item.name ? "text-primary" : "text-[#1d1d1f] hover:text-primary"
                     }`}
                   >
-                    <span className={`relative after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:bg-current after:transition-all after:duration-300 ${
-                      activeMenu === item.name ? "after:w-full" : "after:w-0 group-hover:after:w-full"
-                    }`}>
-                      {item.name}
-                    </span>
+                    {item.name}
                     <svg className={`w-3 h-3 transition-transform duration-200 ${activeMenu === item.name ? "rotate-180 text-primary" : "text-[#aaa]"}`}
                       fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -279,9 +275,11 @@ export default function Header() {
                       key={child.name}
                       href={child.href}
                       onClick={() => setActiveMenu(null)}
-                      className="text-[0.82rem] text-[#444] hover:text-primary font-medium py-1 transition-colors leading-snug cursor-pointer"
+                      className="group inline-block text-[0.82rem] text-[#444] hover:text-primary font-medium py-1 transition-colors leading-snug cursor-pointer"
                     >
-                      {child.name}
+                      <span className="relative after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-0 after:bg-current after:transition-all after:duration-300 group-hover:after:w-full">
+                        {child.name}
+                      </span>
                     </Link>
                   ))}
                 </div>
