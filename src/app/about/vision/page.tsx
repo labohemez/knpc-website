@@ -48,7 +48,7 @@ export default function VisionPage() {
             {/* 구분선 */}
             <div className="w-full h-px bg-white/30 mb-6" />
 
-            <p className="text-white/80 text-[0.82rem] lg:text-[0.92rem] leading-[1.8] tracking-[-0.01em]">
+            <p className="text-white/80 text-[0.82rem] lg:text-[0.92rem] leading-[1.8] tracking-[-0.01em] whitespace-nowrap">
               &ldquo;예수께서 모든 도시와 마을에 두루 다니사 그들의 회당에서 가르치시며 전국 복음을 전파하시며 모든 병과 모든 약한 것을 고치시니라&rdquo;
             </p>
             <p className="text-[#c69d6c] text-[0.8rem] mt-1 mb-10">(마태복음 9:35)</p>
