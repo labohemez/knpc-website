@@ -47,7 +47,7 @@ export async function getLatestSermon(): Promise<Sermon | null> {
 }
 
 export async function getLatestSundaySermon(): Promise<Sermon | null> {
-  const { data } = await supabase.from("sermons").select("id, title, category, scripture, pastor, date, video_url, audio_url, thumbnail_url").eq("category", "주일설교").order("date", { ascending: false }).limit(1).single();
+  const { data } = await supabase.from("sermons").select("id, title, category, scripture, pastor, date, video_url, audio_url, thumbnail_url").eq("category", "주일예배").order("date", { ascending: false }).limit(1).single();
   if (!data) return null;
   return {
     _id: data.id,

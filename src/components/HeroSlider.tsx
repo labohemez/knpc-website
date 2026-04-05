@@ -66,7 +66,7 @@ const PLAYER_ID = "hero-yt-player";
 export default function HeroSlider({ sermon }: { sermon?: Sermon | null }) {
   const videoId = (sermon?.videoUrl ? extractYouTubeId(sermon.videoUrl) : null) ?? FALLBACK_VIDEO_ID;
   const sermonInfo = {
-    category: sermon?.category ?? "주일설교",
+    category: "주일설교",
     title: sermon?.title ?? "",
     scripture: sermon?.scripture ?? "",
     pastor: sermon?.pastor ?? "",
