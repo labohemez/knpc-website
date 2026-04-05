@@ -1,14 +1,11 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SubNav from "../_components/SubNav";
 import AboutHero from "../_components/AboutHero";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "섬기는사람들 | 교회소개 | 강남교회",
-  description: "강남교회 담임목사, 교역자, 전도사 소개입니다.",
-};
 
 type Person = { name: string; role: string; email: string; photo: string };
 
@@ -92,7 +89,20 @@ function PersonCard({ person }: { person: Person }) {
   );
 }
 
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">
+      {children}
+    </h3>
+  );
+}
+
+const tabs = ["교역자", "장로", "직원"] as const;
+type Tab = (typeof tabs)[number];
+
 export default function StaffPage() {
+  const [activeTab, setActiveTab] = useState<Tab>("교역자");
+
   return (
     <>
       <Header />
@@ -102,72 +112,97 @@ export default function StaffPage() {
 
         <section className="py-[5rem] lg:py-[7rem] bg-white">
           <div className="mx-auto max-w-[1400px] px-5 lg:px-8">
-            <div className="mb-12 lg:mb-16">
-              <p className="text-[#c69d6c] text-[0.72rem] font-semibold tracking-[0.2em] uppercase mb-3">Our Team</p>
+            {/* 페이지 타이틀 */}
+            <div className="text-center mb-10">
               <h2 className="text-[1.8rem] lg:text-[2.4rem] font-bold text-[#222] tracking-[-0.04em]">섬기는 사람들</h2>
+              <div className="flex items-center gap-0 mt-4">
+                <div className="flex-1 h-px bg-[#eee]" />
+                <div className="w-2 h-2 rounded-full bg-[#c69d6c] mx-3" />
+                <div className="flex-1 h-px bg-[#eee]" />
+              </div>
             </div>
 
-            {/* 담임목사 */}
-            <div className="mb-16">
-              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">담임목사</h3>
-              <div className="flex justify-center lg:justify-start">
-                <div className="w-[180px]">
-                  <PersonCard person={headPastor} />
+            {/* 탭 */}
+            <div className="flex justify-center gap-2 mb-12">
+              {tabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-5 py-2 text-[0.88rem] font-medium tracking-[-0.02em] rounded-full border transition-colors duration-200 cursor-pointer ${
+                    activeTab === tab
+                      ? "border-[#294a3a] text-[#294a3a] bg-white"
+                      : "border-transparent text-[#999] hover:text-[#555]"
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+
+            {/* 교역자 탭 */}
+            {activeTab === "교역자" && (
+              <>
+                <div className="mb-16">
+                  <SectionTitle>담임목사</SectionTitle>
+                  <div className="flex justify-center lg:justify-start">
+                    <div className="w-[180px]">
+                      <PersonCard person={headPastor} />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* 목사 */}
-            <div className="mb-16">
-              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">목사</h3>
-              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
-                {pastors.map((p) => <PersonCard key={p.email} person={p} />)}
-              </div>
-            </div>
-
-            {/* 협동목사 */}
-            <div className="mb-16">
-              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">협동목사</h3>
-              <div className="flex justify-start">
-                <div className="w-[180px]">
-                  <PersonCard person={associatePastor} />
+                <div className="mb-16">
+                  <SectionTitle>목사</SectionTitle>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {pastors.map((p) => <PersonCard key={p.email} person={p} />)}
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* 강도사 */}
-            <div className="mb-16">
-              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">강도사</h3>
-              <div className="flex justify-start">
-                <div className="w-[180px]">
-                  <PersonCard person={deacons[0]} />
+                <div className="mb-16">
+                  <SectionTitle>협동목사</SectionTitle>
+                  <div className="flex justify-start">
+                    <div className="w-[180px]">
+                      <PersonCard person={associatePastor} />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* 마을전도사 */}
-            <div className="mb-16">
-              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">마을전도사</h3>
-              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
-                {villageEvangelists.map((p) => <PersonCard key={p.email} person={p} />)}
-              </div>
-            </div>
+                <div className="mb-16">
+                  <SectionTitle>강도사</SectionTitle>
+                  <div className="flex justify-start">
+                    <div className="w-[180px]">
+                      <PersonCard person={deacons[0]} />
+                    </div>
+                  </div>
+                </div>
 
-            {/* 교육전도사 */}
-            <div className="mb-16">
-              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">교육전도사</h3>
-              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
-                {educationEvangelists.map((p) => <PersonCard key={p.email} person={p} />)}
-              </div>
-            </div>
+                <div className="mb-16">
+                  <SectionTitle>마을전도사</SectionTitle>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {villageEvangelists.map((p) => <PersonCard key={p.email} person={p} />)}
+                  </div>
+                </div>
 
-            {/* 인턴전도사 */}
-            <div>
-              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">인턴전도사</h3>
-              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
-                {internEvangelists.map((p) => <PersonCard key={p.email} person={p} />)}
-              </div>
-            </div>
+                <div className="mb-16">
+                  <SectionTitle>교육전도사</SectionTitle>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {educationEvangelists.map((p) => <PersonCard key={p.email} person={p} />)}
+                  </div>
+                </div>
+
+                <div>
+                  <SectionTitle>인턴전도사</SectionTitle>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {internEvangelists.map((p) => <PersonCard key={p.email} person={p} />)}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* 장로 / 직원 탭 — 추후 추가 */}
+            {(activeTab === "장로" || activeTab === "직원") && (
+              <p className="text-center text-[0.88rem] text-[#bbb] py-20">준비 중입니다.</p>
+            )}
           </div>
         </section>
       </main>
