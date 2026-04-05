@@ -18,9 +18,8 @@ const visions = [
   "장애인과\n함께하는 교회",
 ];
 
-// TODO: 아래 두 URL을 원본 사이트에서 복사해서 교체해주세요
-const INFOGRAPHIC_1 = "https://cdn.imweb.me/thumbnail/20241206/61bf958b25a70.jpg"; // 현재→70주년 발전 도표
-const INFOGRAPHIC_2 = "https://cdn.imweb.me/thumbnail/20241206/61bf958b25a70.jpg"; // 비전 구조도
+const INFOGRAPHIC_1 = "/images/vision-infographic-1.jpg"; // 현재→70주년 발전 도표
+const INFOGRAPHIC_2 = "/images/vision-infographic-2.jpg"; // 비전 구조도
 
 export default function VisionPage() {
   return (
