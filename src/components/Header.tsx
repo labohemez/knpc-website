@@ -90,12 +90,7 @@ const navigation = [
         { name: "청년2,3부", desc: "청년2,3부(다니엘,다드림) 예배", href: "/sermons?cat=청년2,3부", icon: "people" },
       ]},
       { label: "찬양", children: [
-        { name: "할렐루야",     desc: "할렐루야 찬양대",         href: "/sermons?cat=찬양-할렐루야",   icon: "mic" },
-        { name: "호산나",       desc: "호산나 찬양대",           href: "/sermons?cat=찬양-호산나",     icon: "mic" },
-        { name: "시온",         desc: "시온 찬양대",             href: "/sermons?cat=찬양-시온",       icon: "mic" },
-        { name: "주일찬양",     desc: "주일예배 찬양 영상",       href: "/sermons?cat=찬양-주일예배",   icon: "mic" },
-        { name: "금요찬양",     desc: "금요기도회 찬양 영상",     href: "/sermons?cat=찬양-금요기도회", icon: "mic" },
-        { name: "기타",         desc: "특별 찬양 및 앙상블",     href: "/sermons?cat=찬양-기타",       icon: "mic" },
+        { name: "찬양", desc: "찬양대 영상 모음", href: "/sermons?cat=찬양-할렐루야", icon: "mic" },
       ]},
     ],
   },
