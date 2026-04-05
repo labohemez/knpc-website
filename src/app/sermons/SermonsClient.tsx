@@ -64,9 +64,12 @@ export default function WorshipClient({ sermons }: { sermons: Sermon[] }) {
       <main className="flex-1 flex flex-col">
 
         <PageHero
-          breadcrumbs={[{ name: "홈", href: "/" }, { name: "말씀과찬양" }]}
+          breadcrumbs={[
+            { name: "홈", href: "/" },
+            { name: "말씀과찬양", href: "/sermons" },
+            { name: activeCategory },
+          ]}
           title="말씀과 찬양"
-          subtitle={activeCategory}
         />
 
         {/* ── 최신 설교 ── */}
