@@ -46,6 +46,22 @@ export async function getLatestSermon(): Promise<Sermon | null> {
   };
 }
 
+export async function getLatestSundaySermon(): Promise<Sermon | null> {
+  const { data } = await supabase.from("sermons").select("id, title, category, scripture, pastor, date, video_url, audio_url, thumbnail_url").eq("category", "주일설교").order("date", { ascending: false }).limit(1).single();
+  if (!data) return null;
+  return {
+    _id: data.id,
+    title: data.title,
+    category: data.category,
+    scripture: data.scripture,
+    pastor: data.pastor,
+    date: data.date,
+    videoUrl: data.video_url,
+    audioUrl: data.audio_url,
+    thumbnailUrl: data.thumbnail_url,
+  };
+}
+
 /* ── 소식 ── */
 export type NewsItem = {
   _id: string;

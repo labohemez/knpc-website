@@ -6,15 +6,18 @@ import HeroSlider from "@/components/HeroSlider";
 import NewsSection from "@/components/NewsSection";
 import SermonSlider from "@/components/SermonSlider";
 import GallerySection from "@/components/GallerySection";
+import { getLatestSundaySermon } from "@/lib/queries";
 
-export default function Home() {
+export default async function Home() {
+  const latestSermon = await getLatestSundaySermon().catch(() => null);
+
   return (
     <>
       <Header />
 
       <main className="flex-1 bg-white flex flex-col gap-3">
         {/* ── 히어로 ── */}
-        <HeroSlider />
+        <HeroSlider sermon={latestSermon} />
 
 
 

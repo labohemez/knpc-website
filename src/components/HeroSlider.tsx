@@ -2,23 +2,20 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
+import type { Sermon } from "@/lib/queries";
 
-// 유튜브 배경 영상 설정
-const backgroundVideo = {
-  videoId: "eKtED6_4l3U",
-  poster: "/images/hero-2.jpg",
-  segmentStart: "half",  // 재생시간의 반부터
-  segmentDuration: 30,   // 30초간 재생
-  posterDuration: 10000,
-};
+// 폴백 설정 (설교 데이터 없을 때)
+const FALLBACK_VIDEO_ID = "eKtED6_4l3U";
 
-// 설교 정보 (주일예배만)
-const sermon = {
-  category: "주일설교",
-  title: "소유할 것인가? 소유될 것인가?",
-  scripture: "베드로전서 2:9~10",
-  pastor: "서강일 목사",
-};
+const SEGMENT_START = "half" as const; // 재생시간의 반부터
+const SEGMENT_DURATION = 30;          // 30초간 재생
+const POSTER_DURATION = 10000;
+const POSTER_SRC = "/images/hero-2.jpg";
+
+function extractYouTubeId(url: string): string | null {
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+  return m?.[1] ?? null;
+}
 
 // YouTube IFrame API 타입
 interface YTPlayer {
@@ -66,7 +63,14 @@ const PRELOAD_OFFSET = 3;
 const INITIAL_DELAY = 0; // 버퍼링 완료 즉시 재생
 const PLAYER_ID = "hero-yt-player";
 
-export default function HeroSlider() {
+export default function HeroSlider({ sermon }: { sermon?: Sermon | null }) {
+  const videoId = (sermon?.videoUrl ? extractYouTubeId(sermon.videoUrl) : null) ?? FALLBACK_VIDEO_ID;
+  const sermonInfo = {
+    category: sermon?.category ?? "주일설교",
+    title: sermon?.title ?? "",
+    scripture: sermon?.scripture ?? "",
+    pastor: sermon?.pastor ?? "",
+  };
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [muted, setMuted] = useState(true);
@@ -162,8 +166,6 @@ export default function HeroSlider() {
       if (scrollVolumeFadeRef.current) clearInterval(scrollVolumeFadeRef.current);
     };
   }, []);
-
-  const { videoId, segmentStart, segmentDuration, posterDuration } = backgroundVideo;
 
   // 재생 재개 + 음소거 복원 + 페이드 인
   const showAfterReady = useCallback(() => {
@@ -261,10 +263,10 @@ export default function HeroSlider() {
         posterTimerRef.current = setTimeout(() => {
           transitioning.current = false;
           showWhenReady();
-        }, posterDuration + FADE_DURATION);
+        }, POSTER_DURATION + FADE_DURATION);
       }
     }, 200);
-  }, [preloadSegment, showWhenReady, showAfterReady, posterDuration]);
+  }, [preloadSegment, showWhenReady, showAfterReady]);
 
   // YouTube IFrame API 로드
   useEffect(() => {
@@ -302,13 +304,8 @@ export default function HeroSlider() {
             iframe.style.pointerEvents = "none";
 
             const duration = e.target.getDuration();
-            if (segmentStart === "half") {
-              resolvedStart.current = Math.floor(duration / 2);
-            } else {
-              const ss = segmentStart as unknown as number;
-              resolvedStart.current = ss < 0 ? Math.max(0, duration + ss) : ss;
-            }
-            resolvedEnd.current = resolvedStart.current + segmentDuration;
+            resolvedStart.current = Math.floor(duration / 2);
+            resolvedEnd.current = resolvedStart.current + SEGMENT_DURATION;
 
             setVideoLoaded(true);
             startCycle();
@@ -347,13 +344,13 @@ export default function HeroSlider() {
         try { playerRef.current.destroy(); } catch { /* noop */ }
       }
     };
-  }, [videoId, segmentStart, segmentDuration, startCycle, preloadSegment]);
+  }, [videoId, startCycle, preloadSegment]);
 
   return (
     <section ref={sectionRef} className="relative h-screen bg-white overflow-hidden">
       {/* 포스터 이미지 */}
       <Image
-        src={backgroundVideo.poster}
+        src={POSTER_SRC}
         alt="강남교회 예배"
         fill
         className="object-cover"
@@ -396,18 +393,22 @@ export default function HeroSlider() {
           <div className="max-w-[1400px]">
             <div className="animate-fade-up" style={{ maxWidth: "620px" }}>
               <span className="inline-block px-3 py-1 bg-accent text-white font-semibold tracking-[-0.02em] mb-4" style={{ fontSize: "12px" }}>
-                {sermon.category}
+                {sermonInfo.category}
               </span>
               <h2 className="font-bold text-white tracking-[-0.04em] leading-tight" style={{ fontSize: "clamp(28px, 2.5vw, 42px)" }}>
-                {sermon.title}
+                {sermonInfo.title}
               </h2>
-              <p className="mt-3 text-white/70 tracking-[-0.02em]" style={{ fontSize: "clamp(14px, 1.1vw, 17px)" }}>
-                {sermon.scripture} · {sermon.pastor}
-              </p>
+              {(sermonInfo.scripture || sermonInfo.pastor) && (
+                <p className="mt-3 text-white/70 tracking-[-0.02em]" style={{ fontSize: "clamp(14px, 1.1vw, 17px)" }}>
+                  {[sermonInfo.scripture, sermonInfo.pastor].filter(Boolean).join(" · ")}
+                </p>
+              )}
 
               <div className="flex items-center gap-3 mt-6">
                 <a
-                  href="/sermons"
+                  href={sermon?.videoUrl ?? "/sermons"}
+                  target={sermon?.videoUrl ? "_blank" : undefined}
+                  rel={sermon?.videoUrl ? "noopener noreferrer" : undefined}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-[0.9rem] font-semibold hover:bg-white/85 transition-colors"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
