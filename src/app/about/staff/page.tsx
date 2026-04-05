@@ -13,57 +13,57 @@ const headPastor: Person = {
   name: "고문산 목사",
   role: "담임목사",
   email: "",
-  photo: "https://cdn.imweb.me/thumbnail/20240425/2fafe763174ed.jpg",
+  photo: "/images/staff/head-pastor.jpg",
 };
 
 const pastors: Person[] = [
-  { name: "서강일 목사", role: "행정/예배위원회(정)/청장년부/제자훈련원(정)/교역자·직원 멘토링/가정사역원", email: "seo82good@gmail.com", photo: "https://cdn.imweb.me/thumbnail/20240531/4898a26512c77.jpg" },
-  { name: "황봉규 목사", role: "아동부/디렉터/기도학교(정)/부모·교사교육/고공방", email: "saladin220@naver.com", photo: "https://cdn.imweb.me/thumbnail/20240531/53f8660f8cd68.jpg" },
-  { name: "김세현 목사", role: "다솔(청년 1부)/디렉터/70인전도대", email: "joyksh1987@naver.com", photo: "https://cdn.imweb.me/thumbnail/20240531/7e2b90b153010.jpg" },
-  { name: "김해광 목사", role: "마을위원장/1,2마을/새가족부/장년교육", email: "mclight@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20240531/ee3d75d181e1f.jpg" },
-  { name: "김부림 목사", role: "밀알부, 다사랑부/전도폭발(시니어)", email: "boolimkim@naver.com", photo: "https://cdn.imweb.me/thumbnail/20240531/0a5a640d189a9.jpg" },
-  { name: "이홍우 목사", role: "다드림(청년 3부)/디렉터/홈페이지(정)/비전강남", email: "thome@naver.com", photo: "https://cdn.imweb.me/thumbnail/20241227/10d3b8831da09.jpg" },
-  { name: "박범수 목사", role: "5,6마을/새생명축제(정)/예배위원회(기획)", email: "elpagio@naver.com", photo: "https://cdn.imweb.me/thumbnail/20250919/2071acce6b8b7.jpg" },
-  { name: "김기락 목사", role: "3,4마을/사랑방 교안/전도폭발(장년)/피스메이커(정)", email: "stand-up01@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20251207/05969e3d61cab.jpg" },
-  { name: "이정현 목사", role: "다니엘(청년2부)/세계선교위원회(정)", email: "jinsimura@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251210/3bcd56516be68.jpg" },
-  { name: "김응열 목사", role: "7,8마을/소망부, 경로대학, 성경파노라마(정)", email: "powchist@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251230/ad2d6bd441975.jpg" },
+  { name: "서강일 목사", role: "행정/예배위원회(정)/청장년부/제자훈련원(정)/교역자·직원 멘토링/가정사역원", email: "seo82good@gmail.com", photo: "/images/staff/seo-gang-il.jpg" },
+  { name: "황봉규 목사", role: "아동부/디렉터/기도학교(정)/부모·교사교육/고공방", email: "saladin220@naver.com", photo: "/images/staff/hwang-bong-gyu.jpg" },
+  { name: "김세현 목사", role: "다솔(청년 1부)/디렉터/70인전도대", email: "joyksh1987@naver.com", photo: "/images/staff/kim-se-hyeon.jpg" },
+  { name: "김해광 목사", role: "마을위원장/1,2마을/새가족부/장년교육", email: "mclight@hanmail.net", photo: "/images/staff/kim-hae-gwang.jpg" },
+  { name: "김부림 목사", role: "밀알부, 다사랑부/전도폭발(시니어)", email: "boolimkim@naver.com", photo: "/images/staff/kim-bu-rim.jpg" },
+  { name: "이홍우 목사", role: "다드림(청년 3부)/디렉터/홈페이지(정)/비전강남", email: "thome@naver.com", photo: "/images/staff/lee-hong-u.jpg" },
+  { name: "박범수 목사", role: "5,6마을/새생명축제(정)/예배위원회(기획)", email: "elpagio@naver.com", photo: "/images/staff/park-beom-su.jpg" },
+  { name: "김기락 목사", role: "3,4마을/사랑방 교안/전도폭발(장년)/피스메이커(정)", email: "stand-up01@hanmail.net", photo: "/images/staff/kim-gi-rak.jpg" },
+  { name: "이정현 목사", role: "다니엘(청년2부)/세계선교위원회(정)", email: "jinsimura@naver.com", photo: "/images/staff/lee-jeong-hyeon.jpg" },
+  { name: "김응열 목사", role: "7,8마을/소망부, 경로대학, 성경파노라마(정)", email: "powchist@naver.com", photo: "/images/staff/kim-eung-yeol.jpg" },
 ];
 
 const associatePastor: Person = {
   name: "김광열 목사",
   role: "총신대학교 신학대학원 교수",
   email: "kykim@hanmail.net",
-  photo: "https://cdn.imweb.me/thumbnail/20240602/c4f025d61ae40.jpg",
+  photo: "/images/staff/kim-gwang-yeol.jpg",
 };
 
 const deacons: Person[] = [
-  { name: "이대성 강도사", role: "중등부/세계선교위원회(부)/성경통신", email: "eotjd1097@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251230/5dfc586508acd.jpg" },
+  { name: "이대성 강도사", role: "중등부/세계선교위원회(부)/성경통신", email: "eotjd1097@naver.com", photo: "/images/staff/lee-dae-seong.jpg" },
 ];
 
 const villageEvangelists: Person[] = [
-  { name: "유미정 전도사", role: "3,4마을/마을위원회(부)", email: "hannayu@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20240531/9efb60939a12d.jpg" },
-  { name: "김주경 전도사", role: "5,6마을/영접팀/새생명축제(부)", email: "jookyung858@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20240531/4020997d0039c.jpg" },
-  { name: "장혜경 전도사", role: "1,2마을/제자훈련원(부)", email: "amosjang@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20251107/b16c41d601812.png" },
-  { name: "황라헬 전도사", role: "7,8마을/기도학교(부)", email: "rachel5069@naver.com", photo: "https://cdn.imweb.me/thumbnail/20241227/1cf1142747eb3.jpg" },
+  { name: "유미정 전도사", role: "3,4마을/마을위원회(부)", email: "hannayu@hanmail.net", photo: "/images/staff/yoo-mi-jeong.jpg" },
+  { name: "김주경 전도사", role: "5,6마을/영접팀/새생명축제(부)", email: "jookyung858@hanmail.net", photo: "/images/staff/kim-ju-gyeong.jpg" },
+  { name: "장혜경 전도사", role: "1,2마을/제자훈련원(부)", email: "amosjang@hanmail.net", photo: "/images/staff/jang-hye-gyeong.png" },
+  { name: "황라헬 전도사", role: "7,8마을/기도학교(부)", email: "rachel5069@naver.com", photo: "/images/staff/hwang-ra-hel.jpg" },
 ];
 
 const educationEvangelists: Person[] = [
-  { name: "김경성 전도사", role: "영아부/디렉터/아기학교/태아부모학교/구립어린이집", email: "kkss2005@daum.net", photo: "https://cdn.imweb.me/thumbnail/20240531/db49e61f46fbd.jpg" },
-  { name: "류세현 전도사", role: "유년부/피스메이커(부)", email: "troishyun@gmail.com", photo: "https://cdn.imweb.me/thumbnail/20240531/1c3c06b9eb854.jpg" },
-  { name: "채남주 전도사", role: "유치부", email: "coskawn05@naver.com", photo: "https://cdn.imweb.me/thumbnail/20241227/d8c4ea60738fa.jpg" },
-  { name: "박대연 전도사", role: "청년2부", email: "eodus4044@gmail.com", photo: "https://cdn.imweb.me/thumbnail/20241227/bb08adce03056.jpg" },
-  { name: "서반석 전도사", role: "사랑부/사랑학교/방송실", email: "luvjesus0123@naver.com", photo: "https://cdn.imweb.me/thumbnail/20241227/3a6b020d2d6a0.jpg" },
-  { name: "박성빈 전도사", role: "청년1부/생태계(부)", email: "lovebin300@naver.com", photo: "https://cdn.imweb.me/thumbnail/20241227/87af15fc1ccce.jpg" },
-  { name: "양준수 전도사", role: "고등부/성경파노라마(부)", email: "didwnstn5593@naver.com", photo: "https://cdn.imweb.me/thumbnail/20241227/3a7be10f05b72.jpg" },
-  { name: "정소망 전도사", role: "유아부", email: "wjdthakd1006@naver.com", photo: "https://cdn.imweb.me/thumbnail/20250323/73e4483b33c67.jpg" },
-  { name: "김지수 전도사", role: "예배위원회(찬양)/찬양사역(시냇가에 심은 나무, 셀라)", email: "wltn2305@naver.com", photo: "https://cdn.imweb.me/thumbnail/20250309/72ac3ba85afbc.png" },
-  { name: "김준성 전도사", role: "초등부/홈페이지(부)", email: "woom0519@gmail.com", photo: "https://cdn.imweb.me/thumbnail/20251203/0e7a7e325c359.jpg" },
-  { name: "김광은 전도사", role: "예배위원회(찬양)/아름다운백성 찬양팀", email: "jacob_1010@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251207/3f4b80e56f328.jpg" },
+  { name: "김경성 전도사", role: "영아부/디렉터/아기학교/태아부모학교/구립어린이집", email: "kkss2005@daum.net", photo: "/images/staff/kim-gyeong-seong.jpg" },
+  { name: "류세현 전도사", role: "유년부/피스메이커(부)", email: "troishyun@gmail.com", photo: "/images/staff/ryu-se-hyeon.jpg" },
+  { name: "채남주 전도사", role: "유치부", email: "coskawn05@naver.com", photo: "/images/staff/chae-nam-ju.jpg" },
+  { name: "박대연 전도사", role: "청년2부", email: "eodus4044@gmail.com", photo: "/images/staff/park-dae-yeon.jpg" },
+  { name: "서반석 전도사", role: "사랑부/사랑학교/방송실", email: "luvjesus0123@naver.com", photo: "/images/staff/seo-ban-seok.jpg" },
+  { name: "박성빈 전도사", role: "청년1부/생태계(부)", email: "lovebin300@naver.com", photo: "/images/staff/park-seong-bin.jpg" },
+  { name: "양준수 전도사", role: "고등부/성경파노라마(부)", email: "didwnstn5593@naver.com", photo: "/images/staff/yang-jun-su.jpg" },
+  { name: "정소망 전도사", role: "유아부", email: "wjdthakd1006@naver.com", photo: "/images/staff/jeong-so-mang.jpg" },
+  { name: "김지수 전도사", role: "예배위원회(찬양)/찬양사역(시냇가에 심은 나무, 셀라)", email: "wltn2305@naver.com", photo: "/images/staff/kim-ji-su.png" },
+  { name: "김준성 전도사", role: "초등부/홈페이지(부)", email: "woom0519@gmail.com", photo: "/images/staff/kim-jun-seong.jpg" },
+  { name: "김광은 전도사", role: "예배위원회(찬양)/아름다운백성 찬양팀", email: "jacob_1010@naver.com", photo: "/images/staff/kim-gwang-eun.jpg" },
 ];
 
 const internEvangelists: Person[] = [
-  { name: "장휘은 전도사", role: "청년부 공동사역", email: "onsarang2000@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251207/ad41753cc75ec.jpg" },
-  { name: "주찬영 전도사", role: "교육부 공동사역", email: "jooyona12@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251219/938519928d542.jpg" },
+  { name: "장휘은 전도사", role: "청년부 공동사역", email: "onsarang2000@naver.com", photo: "/images/staff/jang-hwi-eun.jpg" },
+  { name: "주찬영 전도사", role: "교육부 공동사역", email: "jooyona12@naver.com", photo: "/images/staff/ju-chan-yeong.jpg" },
 ];
 
 function PersonCard({ person }: { person: Person }) {
@@ -75,7 +75,6 @@ function PersonCard({ person }: { person: Person }) {
           alt={person.name}
           fill
           className="object-cover object-top"
-          unoptimized
         />
       </div>
       <p className="text-[0.92rem] font-bold text-[#222] tracking-[-0.02em]">{person.name}</p>
