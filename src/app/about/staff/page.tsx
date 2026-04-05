@@ -39,12 +39,18 @@ const associatePastor: Person = {
   photo: "https://cdn.imweb.me/thumbnail/20240602/c4f025d61ae40.jpg",
 };
 
-const evangelists: Person[] = [
+const deacons: Person[] = [
   { name: "이대성 강도사", role: "중등부/세계선교위원회(부)/성경통신", email: "eotjd1097@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251230/5dfc586508acd.jpg" },
+];
+
+const villageEvangelists: Person[] = [
   { name: "유미정 전도사", role: "3,4마을/마을위원회(부)", email: "hannayu@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20240531/9efb60939a12d.jpg" },
   { name: "김주경 전도사", role: "5,6마을/영접팀/새생명축제(부)", email: "jookyung858@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20240531/4020997d0039c.jpg" },
   { name: "장혜경 전도사", role: "1,2마을/제자훈련원(부)", email: "amosjang@hanmail.net", photo: "https://cdn.imweb.me/thumbnail/20251107/b16c41d601812.png" },
   { name: "황라헬 전도사", role: "7,8마을/기도학교(부)", email: "rachel5069@naver.com", photo: "https://cdn.imweb.me/thumbnail/20241227/1cf1142747eb3.jpg" },
+];
+
+const educationEvangelists: Person[] = [
   { name: "김경성 전도사", role: "영아부/디렉터/아기학교/태아부모학교/구립어린이집", email: "kkss2005@daum.net", photo: "https://cdn.imweb.me/thumbnail/20240531/db49e61f46fbd.jpg" },
   { name: "류세현 전도사", role: "유년부/피스메이커(부)", email: "troishyun@gmail.com", photo: "https://cdn.imweb.me/thumbnail/20240531/1c3c06b9eb854.jpg" },
   { name: "채남주 전도사", role: "유치부", email: "coskawn05@naver.com", photo: "https://cdn.imweb.me/thumbnail/20241227/d8c4ea60738fa.jpg" },
@@ -56,8 +62,11 @@ const evangelists: Person[] = [
   { name: "김지수 전도사", role: "예배위원회(찬양)/찬양사역(시냇가에 심은 나무, 셀라)", email: "wltn2305@naver.com", photo: "https://cdn.imweb.me/thumbnail/20250309/72ac3ba85afbc.png" },
   { name: "김준성 전도사", role: "초등부/홈페이지(부)", email: "woom0519@gmail.com", photo: "https://cdn.imweb.me/thumbnail/20251203/0e7a7e325c359.jpg" },
   { name: "김광은 전도사", role: "예배위원회(찬양)/아름다운백성 찬양팀", email: "jacob_1010@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251207/3f4b80e56f328.jpg" },
-  { name: "장휘은 전도사", role: "청년부 공동사역 (인턴)", email: "onsarang2000@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251207/ad41753cc75ec.jpg" },
-  { name: "주찬영 전도사", role: "교육부 공동사역 (인턴)", email: "jooyona12@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251219/938519928d542.jpg" },
+];
+
+const internEvangelists: Person[] = [
+  { name: "장휘은 전도사", role: "청년부 공동사역", email: "onsarang2000@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251207/ad41753cc75ec.jpg" },
+  { name: "주찬영 전도사", role: "교육부 공동사역", email: "jooyona12@naver.com", photo: "https://cdn.imweb.me/thumbnail/20251219/938519928d542.jpg" },
 ];
 
 function PersonCard({ person }: { person: Person }) {
@@ -126,11 +135,37 @@ export default function StaffPage() {
               </div>
             </div>
 
-            {/* 전도사 */}
-            <div>
-              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">강도사 / 전도사</h3>
+            {/* 강도사 */}
+            <div className="mb-16">
+              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">강도사</h3>
+              <div className="flex justify-start">
+                <div className="w-[180px]">
+                  <PersonCard person={deacons[0]} />
+                </div>
+              </div>
+            </div>
+
+            {/* 마을전도사 */}
+            <div className="mb-16">
+              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">마을전도사</h3>
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
-                {evangelists.map((p) => <PersonCard key={p.email} person={p} />)}
+                {villageEvangelists.map((p) => <PersonCard key={p.email} person={p} />)}
+              </div>
+            </div>
+
+            {/* 교육전도사 */}
+            <div className="mb-16">
+              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">교육전도사</h3>
+              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                {educationEvangelists.map((p) => <PersonCard key={p.email} person={p} />)}
+              </div>
+            </div>
+
+            {/* 인턴전도사 */}
+            <div>
+              <h3 className="text-[0.78rem] font-semibold text-[#999] tracking-[0.1em] uppercase mb-8 pb-3 border-b border-[#eee]">인턴전도사</h3>
+              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                {internEvangelists.map((p) => <PersonCard key={p.email} person={p} />)}
               </div>
             </div>
           </div>
