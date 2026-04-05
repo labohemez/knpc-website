@@ -66,6 +66,76 @@ const internEvangelists: Person[] = [
   { name: "주찬영 전도사", role: "교육부 공동사역", email: "jooyona12@naver.com", photo: "/images/staff/ju-chan-yeong.jpg" },
 ];
 
+const elders: Person[] = [
+  { name: "김도식 장로", role: "", email: "", photo: "/images/elders/김도식.jpg" },
+  { name: "임석규 장로", role: "", email: "", photo: "/images/elders/임석규.jpg" },
+  { name: "심현식 장로", role: "", email: "", photo: "/images/elders/심현식.jpg" },
+  { name: "남차원 장로", role: "", email: "", photo: "/images/elders/남차원.jpg" },
+  { name: "안성철 장로", role: "", email: "", photo: "/images/elders/안성철.jpg" },
+  { name: "이균상 장로", role: "", email: "", photo: "/images/elders/이균상.jpg" },
+  { name: "박기영 장로", role: "", email: "", photo: "/images/elders/박기영.jpg" },
+  { name: "김증석 장로", role: "", email: "", photo: "/images/elders/김증석.jpg" },
+  { name: "심갑식 장로", role: "", email: "", photo: "/images/elders/심갑식.jpg" },
+  { name: "홍성길 장로", role: "", email: "", photo: "/images/elders/홍성길.jpg" },
+  { name: "임병관 장로", role: "", email: "", photo: "/images/elders/임병관.jpg" },
+  { name: "오중수 장로", role: "", email: "", photo: "/images/elders/오중수.jpg" },
+  { name: "이덕근 장로", role: "", email: "", photo: "/images/elders/이덕근.jpg" },
+  { name: "박기선 장로", role: "", email: "", photo: "/images/elders/박기선.jpg" },
+  { name: "이세열 장로", role: "", email: "", photo: "/images/elders/이세열.jpg" },
+  { name: "신창남 장로", role: "", email: "", photo: "/images/elders/신창남.jpg" },
+  { name: "우성룡 장로", role: "", email: "", photo: "/images/elders/우성룡.jpg" },
+  { name: "오해정 장로", role: "", email: "", photo: "/images/elders/오해정.jpg" },
+  { name: "김정규 장로", role: "", email: "", photo: "/images/elders/김정규.jpg" },
+  { name: "김광철 장로", role: "", email: "", photo: "/images/elders/김광철.jpg" },
+  { name: "윤갑식 장로", role: "", email: "", photo: "/images/elders/윤갑식.jpg" },
+  { name: "최일규 장로", role: "", email: "", photo: "/images/elders/최일규.jpg" },
+  { name: "장우택 장로", role: "", email: "", photo: "/images/elders/장우택.jpg" },
+  { name: "이정근 장로", role: "", email: "", photo: "/images/elders/이정근.jpg" },
+  { name: "최동진 장로", role: "", email: "", photo: "/images/elders/최동진.jpg" },
+  { name: "김규명 장로", role: "", email: "", photo: "/images/elders/김규명.jpg" },
+  { name: "이계원 장로", role: "", email: "", photo: "/images/elders/이계원.jpg" },
+  { name: "정상문 장로", role: "", email: "", photo: "/images/elders/정상문.jpg" },
+  { name: "이희성 장로", role: "", email: "", photo: "/images/elders/이희성.jpg" },
+  { name: "박영철 장로", role: "", email: "", photo: "/images/elders/박영철.jpg" },
+  { name: "박종우 장로", role: "", email: "", photo: "/images/elders/박종우.jpg" },
+  { name: "한광희 장로", role: "", email: "", photo: "/images/elders/한광희.jpg" },
+  { name: "김신원 장로", role: "", email: "", photo: "/images/elders/김신원.jpg" },
+  { name: "이기석 장로", role: "", email: "", photo: "/images/elders/이기석.jpg" },
+  { name: "서우덕 장로", role: "", email: "", photo: "/images/elders/서우덕.jpg" },
+  { name: "박석주 장로", role: "", email: "", photo: "/images/elders/박석주.jpg" },
+  { name: "유병선 장로", role: "", email: "", photo: "/images/elders/유병선.jpg" },
+  { name: "노학주 장로", role: "", email: "", photo: "/images/elders/노학주.jpg" },
+  { name: "유창수 장로", role: "", email: "", photo: "/images/elders/유창수.jpg" },
+  { name: "하덕상 장로", role: "", email: "", photo: "/images/elders/하덕상.jpg" },
+  { name: "이영수 장로", role: "", email: "", photo: "/images/elders/이영수.jpg" },
+  { name: "정용근 장로", role: "", email: "", photo: "/images/elders/정용근.jpg" },
+  { name: "이용석 장로", role: "", email: "", photo: "/images/elders/이용석.jpg" },
+  { name: "김대현 장로", role: "", email: "", photo: "/images/elders/김대현.jpg" },
+  { name: "윤경현 장로", role: "", email: "", photo: "/images/elders/윤경현.jpg" },
+  { name: "곽병호 장로", role: "", email: "", photo: "/images/elders/곽병호.jpg" },
+  { name: "김명수 장로", role: "", email: "", photo: "/images/elders/김명수.jpg" },
+  { name: "강인원 장로", role: "", email: "", photo: "/images/elders/강인원.jpg" },
+  { name: "김용인 장로", role: "", email: "", photo: "/images/elders/김용인.jpg" },
+  { name: "조문현 장로", role: "", email: "", photo: "/images/elders/조문현.jpg" },
+  { name: "박종식 장로", role: "", email: "", photo: "/images/elders/박종식.jpg" },
+  { name: "홍문의 장로", role: "", email: "", photo: "/images/elders/홍문의.jpg" },
+  { name: "정태범 장로", role: "", email: "", photo: "/images/elders/정태범.jpg" },
+  { name: "심재천 장로", role: "", email: "", photo: "/images/elders/심재천.jpg" },
+  { name: "안성환 장로", role: "", email: "", photo: "/images/elders/안성환.jpg" },
+  { name: "신용원 장로", role: "", email: "", photo: "/images/elders/신용원.jpg" },
+  { name: "신경호 장로", role: "", email: "", photo: "/images/elders/신경호.jpg" },
+  { name: "이원재 장로", role: "", email: "", photo: "/images/elders/이원재.jpg" },
+  { name: "박호성 장로", role: "", email: "", photo: "/images/elders/박호성.jpg" },
+  { name: "허장민 장로", role: "", email: "", photo: "/images/elders/허장민.jpg" },
+  { name: "유현국 장로", role: "", email: "", photo: "/images/elders/유현국.jpg" },
+  { name: "박광민 장로", role: "", email: "", photo: "/images/elders/박광민.jpg" },
+  { name: "김성은 장로", role: "", email: "", photo: "/images/elders/김성은.jpg" },
+  { name: "성일현 장로", role: "", email: "", photo: "/images/elders/성일현.jpg" },
+  { name: "박승일 장로", role: "", email: "", photo: "/images/elders/박승일.jpg" },
+  { name: "정국창 장로", role: "", email: "", photo: "/images/elders/정국창.jpg" },
+  { name: "김지태 장로", role: "", email: "", photo: "/images/elders/김지태.jpg" },
+];
+
 function PersonCard({ person }: { person: Person }) {
   return (
     <div className="flex flex-col items-center text-center">
@@ -198,8 +268,18 @@ export default function StaffPage() {
               </>
             )}
 
-            {/* 장로 / 직원 탭 — 추후 추가 */}
-            {(activeTab === "장로" || activeTab === "직원") && (
+            {/* 장로 탭 */}
+            {activeTab === "장로" && (
+              <div>
+                <SectionTitle>장로</SectionTitle>
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+                  {elders.map((p) => <PersonCard key={p.name} person={p} />)}
+                </div>
+              </div>
+            )}
+
+            {/* 직원 탭 */}
+            {activeTab === "직원" && (
               <p className="text-center text-[0.88rem] text-[#bbb] py-20">준비 중입니다.</p>
             )}
           </div>
