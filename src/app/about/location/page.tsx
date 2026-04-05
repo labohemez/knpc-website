@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SubNav from "../_components/SubNav";
+import AboutHero from "../_components/AboutHero";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,6 +14,7 @@ export default function LocationPage() {
     <>
       <Header />
       <main className="flex-1 bg-white flex flex-col">
+        <AboutHero pageName="오시는길" />
         <SubNav />
 
         {/* 본당 */}

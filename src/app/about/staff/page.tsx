@@ -2,6 +2,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SubNav from "../_components/SubNav";
+import AboutHero from "../_components/AboutHero";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -81,6 +82,7 @@ export default function StaffPage() {
     <>
       <Header />
       <main className="flex-1 bg-white flex flex-col">
+        <AboutHero pageName="섬기는사람들" />
         <SubNav />
 
         <section className="py-[5rem] lg:py-[7rem] bg-white">

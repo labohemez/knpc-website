@@ -2,6 +2,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SubNav from "../_components/SubNav";
+import AboutHero from "../_components/AboutHero";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -52,6 +53,7 @@ export default function VisionPage() {
     <>
       <Header />
       <main className="flex-1 bg-white flex flex-col">
+        <AboutHero pageName="교회비전" />
         <SubNav />
 
         {/* 성경 말씀 */}

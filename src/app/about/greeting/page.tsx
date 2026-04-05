@@ -2,6 +2,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SubNav from "../_components/SubNav";
+import AboutHero from "../_components/AboutHero";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default function GreetingPage() {
     <>
       <Header />
       <main className="flex-1 bg-white flex flex-col">
+        <AboutHero pageName="환영인사" />
         <SubNav />
 
         {/* 담임목사 인사 */}

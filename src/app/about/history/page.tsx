@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SubNav from "../_components/SubNav";
+import AboutHero from "../_components/AboutHero";
 import HistoryTabs from "../_components/HistoryTabs";
 import type { Metadata } from "next";
 
@@ -14,6 +15,7 @@ export default function HistoryPage() {
     <>
       <Header />
       <main className="flex-1 bg-white flex flex-col">
+        <AboutHero pageName="교회연혁" />
         <SubNav />
 
         <section className="py-[5rem] lg:py-[7rem] bg-white">
